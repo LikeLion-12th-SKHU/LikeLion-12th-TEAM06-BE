@@ -14,8 +14,8 @@ public class SwaggerConfig {
 
         Info info = new Info()
                 .version("v1.0.0")
-                .title("MOOD FRIEND API")
-                .description("MOOD FRIEND API 명세서");
+                .title("Plantication Swagger API")
+                .description("Plantication API");
 
         return new OpenAPI()
                 .info(info);
