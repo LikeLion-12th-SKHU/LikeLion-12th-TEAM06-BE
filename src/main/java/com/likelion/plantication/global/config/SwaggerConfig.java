@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
 
         Info info = new Info()
-                .version("v1.0.0")
+                .version("v0.0.1")
                 .title("Plantication Swagger API")
                 .description("Plantication API");
 

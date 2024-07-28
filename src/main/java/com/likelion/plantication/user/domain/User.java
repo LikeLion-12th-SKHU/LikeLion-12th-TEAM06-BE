@@ -48,6 +48,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     @Builder
 
     public User(Long userId, String email, String password, String phone, String name, String nickname, String profileImage, LocalDateTime createdAt, LocalDateTime modifiedAt, Role role) {
