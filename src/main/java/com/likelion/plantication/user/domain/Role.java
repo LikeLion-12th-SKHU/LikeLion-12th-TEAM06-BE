@@ -15,7 +15,7 @@ public enum Role {
     private final String code;
     private final String displayName;
 
-    public static Role getRoleType(String code) {
+    public static Role getRole(String code) {
         return Arrays.stream(Role.values())
                 .filter(r -> r.getCode().equals(code))
                 .findAny()

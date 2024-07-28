@@ -41,7 +41,7 @@ public class UserService {
 
         // 중복 로직 추후 추가
 
-        Role role = Role.getRoleType(userReqDto.role());
+        Role role = Role.getRole(userReqDto.role());
 
         User user = userRepository.save(User.builder()
                 .email(userReqDto.email())
