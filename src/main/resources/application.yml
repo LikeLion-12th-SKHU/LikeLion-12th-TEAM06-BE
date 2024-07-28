@@ -27,7 +27,7 @@ cloud:
         s3:
             bucket: planticationbucket
         region:
-            static: ap-northeast-3
+            static: ap-northeast-2
         stack:
             auto: false
 
