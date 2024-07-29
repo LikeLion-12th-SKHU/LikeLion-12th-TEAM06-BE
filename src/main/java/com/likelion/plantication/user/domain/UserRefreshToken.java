@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "MEMBER_REFRESH_TOKEN")
+@Table(name = "USER_REFRESH_TOKEN")
 @Entity
 public class UserRefreshToken {
 
