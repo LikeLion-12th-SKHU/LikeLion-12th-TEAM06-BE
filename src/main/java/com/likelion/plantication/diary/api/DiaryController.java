@@ -40,6 +40,7 @@ public class DiaryController {
         return ResponseEntity
                 .status(SuccessCode.GET_SUCCESS.getHttpStatusCode())
                 .body(diaryInfoResDto);
+
     }
 
     // 익명 일기 작성

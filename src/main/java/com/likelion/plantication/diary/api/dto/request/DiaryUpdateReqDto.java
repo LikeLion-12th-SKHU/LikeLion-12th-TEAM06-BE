@@ -7,4 +7,5 @@ public record DiaryUpdateReqDto(
         String content,
         String image
 ) {
+
 }
