@@ -1,5 +1,6 @@
 package com.likelion.plantication.user.application;
 
+import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.global.jwt.TokenProvider;
 import com.likelion.plantication.user.api.dto.request.UserReqDto;
 import com.likelion.plantication.user.api.dto.response.UserResDto;
@@ -67,9 +68,10 @@ public class UserService {
         UserResDto userResDto = UserResDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                // 상태 코드 추가할지말지 고민중 ...
                 .build();
 
-        return ResponseEntity.status(201)
+        return ResponseEntity.status(SuccessCode.USER_CREATE_SUCCESS.getHttpStatusCode())
                 .body(userResDto);
     }
 }

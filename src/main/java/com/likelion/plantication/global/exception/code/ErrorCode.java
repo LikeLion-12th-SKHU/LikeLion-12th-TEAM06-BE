@@ -8,9 +8,13 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ErrorCode {
+    // 400
+    INVALID_EMAIL_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이메일 형식입니다."),
+    INVALID_PASSWORD_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 비밀번호 형식입니다."),
+    INVALID_NICKNAME_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 닉네임 형식입니다."),
 
     // 403
-    FORBIDDEN_AUTH_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 없는 토큰입니다."),
+    AUTH_FORBIDDEN_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 제한된 토큰입니다."),
     EXPIRED_TOKEN_EXCEPTION(HttpStatus.FORBIDDEN, "토큰이 만료되었습니다."),
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     AUTHENTICATION_FAILED_EXCEPTION(HttpStatus.FORBIDDEN, "인증에 실패했습니다."),

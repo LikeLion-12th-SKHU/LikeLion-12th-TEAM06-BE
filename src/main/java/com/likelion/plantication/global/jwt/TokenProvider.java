@@ -87,7 +87,7 @@ public class TokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("Role") == null) {
-            throw new CustomException(ErrorCode.FORBIDDEN_AUTH_EXCEPTION, ErrorCode.FORBIDDEN_AUTH_EXCEPTION.getMessage());
+            throw new CustomException(ErrorCode.AUTH_FORBIDDEN_EXCEPTION, ErrorCode.AUTH_FORBIDDEN_EXCEPTION.getMessage());
         }
 
         Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("Role").toString().split(","))
