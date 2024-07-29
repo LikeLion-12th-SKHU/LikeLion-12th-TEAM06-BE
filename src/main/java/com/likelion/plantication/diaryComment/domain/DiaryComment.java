@@ -44,7 +44,7 @@ public class DiaryComment {
     }
 
     public void update(DiaryCommentUpdateReqDto diaryCommentUpdateReqDto) {
-        this.content = diaryUpdateReqDto.content();
+        this.content = diaryCommentUpdateReqDto.content();
     }
 
     public void updateModifiedAt(DateTime modifiedAt) { this.modifiedAt = modifiedAt; }
