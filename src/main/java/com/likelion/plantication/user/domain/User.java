@@ -24,10 +24,10 @@ public class User {
     @Column(name = "EMAIL", length = 50, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "PHONE", nullable = false)
+    @Column(name = "PHONE")
     private String phone;
 
     @Column(name = "NAME", length = 20, nullable = false)

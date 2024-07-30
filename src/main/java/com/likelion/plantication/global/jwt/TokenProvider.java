@@ -1,5 +1,6 @@
 package com.likelion.plantication.global.jwt;
 
+import com.likelion.plantication.auth.domain.GoogleToken;
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.user.domain.User;
@@ -120,5 +121,21 @@ public class TokenProvider {
         } catch (UnsupportedJwtException | ExpiredJwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    // Google OAuth
+
+    public GoogleToken createGoogleToken(User user) {
+        long nowTime = new Date().getTime();
+        Date accessTokenExpiredTime = new Date(nowTime + accessTokenValidityTime);
+
+        String accessToken = Jwts.builder()
+                .setSubject(user.getUserId().toString())
+                .claim("Role", user.getRole().getCode())
+                .setExpiration(accessTokenExpiredTime)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        return new GoogleToken(accessToken);
     }
 }

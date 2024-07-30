@@ -1,5 +1,6 @@
 package com.likelion.plantication.user.api;
 
+import com.likelion.plantication.auth.application.GoogleOAuthService;
 import com.likelion.plantication.user.api.dto.request.UserLogInReqDto;
 import com.likelion.plantication.user.api.dto.request.UserSignUpReqDto;
 import com.likelion.plantication.user.api.dto.response.UserLogInResDto;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +24,7 @@ public class UserController {
 
     private final UserSignUpService userSignUpService;
     private final UserLogInService userLogInService;
+    private final GoogleOAuthService googleOAuthService;
 
     @PostMapping("/signup")
     @Operation(

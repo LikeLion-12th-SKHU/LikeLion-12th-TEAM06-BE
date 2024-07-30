@@ -25,10 +25,15 @@ public enum ErrorCode {
     // 404
     EMAIL_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이메일을 찾을 수 없습니다."),
     ID_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 ID를 찾을 수 없습니다."),
+    USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
 
     // 500
     CREATE_TOKEN_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "에러로 인해 토큰을 생성할 수 없습니다."),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 서버 에러가 발생했습니다");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 서버 에러가 발생했습니다."),
+
+    // 503
+    FAIL_GET_OAUTH_TOKEN(HttpStatus.SERVICE_UNAVAILABLE, "토큰을 가져오는데 실패했습니다.");
+
 
     private final HttpStatus httpStatus;
     private final String message;
