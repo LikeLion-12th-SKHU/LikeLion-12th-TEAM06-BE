@@ -1,11 +1,10 @@
 package com.likelion.plantication.auth.application;
 
-import com.likelion.plantication.auth.domain.GoogleToken;
 import com.likelion.plantication.auth.domain.UserInfo;
+import com.likelion.plantication.auth.domain.GoogleToken;
 import com.likelion.plantication.auth.api.dto.response.GoogleResDto;
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
-import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.global.jwt.TokenProvider;
 import com.likelion.plantication.user.domain.Role;
 import com.likelion.plantication.user.domain.User;
@@ -15,9 +14,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Service
@@ -36,28 +39,66 @@ public class GoogleOAuthService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
-    public String getGoogleToken(String code) {
-        RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> params = Map.of(
-                "code", code,
-                "scope", "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-                "client_id", GOOGLE_CLIENT_ID,
-                "client_secret", GOOGLE_CLIENT_SECRET,
-                "redirect_uri", GOOGLE_REDIRECT_URI,
-                "grant_type", "authorization_code"
-        );
+//    public ResponseEntity<String> getGoogleToken(String code) {
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        Map<String, String> params = Map.of(
+//                "code", code,
+//                "scope", "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+//                "client_id", GOOGLE_CLIENT_ID,
+//                "client_secret", GOOGLE_CLIENT_SECRET,
+//                "redirect_uri", GOOGLE_REDIRECT_URI,
+//                "grant_type", "authorization_code"
+//        );
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//        HttpEntity<Map<String, String>> request = new HttpEntity<>(params, headers);
+//
+//        ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_TOKEN_URL, request, String.class);
+//
+//        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+//            String json = responseEntity.getBody();
+//            Gson gson = new Gson();
+//
+//            String accessToken = gson.fromJson(json, GoogleToken.class).accessToken();
+//
+//            return ResponseEntity.ok(accessToken);
+//        }
+//
+//        throw new CustomException(ErrorCode.FAIL_GET_OAUTH_TOKEN, ErrorCode.FAIL_GET_OAUTH_TOKEN.getMessage());
+//    }
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_TOKEN_URL, params, String.class);
+    public ResponseEntity<String> getGoogleToken(String code) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+
+        requestBody.add("code", code);
+        requestBody.add("scope", "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email");
+        requestBody.add("client_id", GOOGLE_CLIENT_ID);
+        requestBody.add("client_secret", GOOGLE_CLIENT_SECRET);
+        requestBody.add("redirect_uri", GOOGLE_REDIRECT_URI);
+        requestBody.add("grant_type", "authorization_code");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_TOKEN_URL, request, String.class);
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String json = responseEntity.getBody();
             Gson gson = new Gson();
 
-            return gson.fromJson(json, GoogleToken.class)
-                    .getAccessToken();
-        }
+            GoogleToken googleToken = gson.fromJson(json, GoogleToken.class);
+            String accessToken = googleToken.accessToken();
 
-        throw new CustomException(ErrorCode.FAIL_GET_OAUTH_TOKEN, ErrorCode.FAIL_GET_OAUTH_TOKEN.getMessage());
+            return ResponseEntity.ok(accessToken);
+        } else {
+            throw new CustomException(ErrorCode.FAIL_GET_OAUTH_TOKEN, ErrorCode.FAIL_GET_OAUTH_TOKEN.getMessage());
+        }
     }
 
     public ResponseEntity<GoogleResDto> googleOAuth(String googleToken) {
@@ -67,8 +108,8 @@ public class GoogleOAuthService {
                 userRepository.save(User.builder()
                         .email(userInfo.email())
                         .name(userInfo.name())
-                        .nickname(userInfo.name())
                         .password(null)
+                        .nickname(userInfo.name())
                         .role(Role.USER)
                         .build())
         );
@@ -77,8 +118,7 @@ public class GoogleOAuthService {
                 .accessToken(tokenProvider.createAccessToken(user))
                 .build();
 
-        return ResponseEntity.status(SuccessCode.USER_LOGIN_SUCCESS.getHttpStatusCode())
-                .body(googleResDto);
+        return ResponseEntity.ok(googleResDto);
     }
 
     public UserInfo getUserInfo(String accessToken) {
@@ -95,6 +135,7 @@ public class GoogleOAuthService {
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String json = responseEntity.getBody();
             Gson gson = new Gson();
+
             return gson.fromJson(json, UserInfo.class);
         }
 

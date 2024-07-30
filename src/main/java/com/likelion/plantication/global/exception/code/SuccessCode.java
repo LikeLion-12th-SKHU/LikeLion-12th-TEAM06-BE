@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 public enum SuccessCode {
     // 200
     GET_SUCCESS(HttpStatus.OK, "조회에 성공했습니다."),
+    TOKEN_GET_SUCCESS(HttpStatus.OK, "토큰 조회에 성공했습니다."),
     USER_LOGIN_SUCCESS(HttpStatus.OK, "로그인 되었습니다."),
 
     // 201

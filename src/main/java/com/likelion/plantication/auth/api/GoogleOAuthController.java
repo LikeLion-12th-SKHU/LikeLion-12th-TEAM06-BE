@@ -2,11 +2,13 @@ package com.likelion.plantication.auth.api;
 
 import com.likelion.plantication.auth.api.dto.response.GoogleResDto;
 import com.likelion.plantication.auth.application.GoogleOAuthService;
+import com.likelion.plantication.global.exception.code.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,24 @@ public class GoogleOAuthController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<GoogleResDto> googleOAuth(@RequestParam(name = "code") String code) {
-        GoogleResDto googleResDto = googleOAuthService.googleOAuth(googleOAuthService.getGoogleToken(code)).getBody();
+//    public ResponseEntity<GoogleResDto> googleOAuth(@RequestParam(name = "code") String code) {
+//        String googleToken = googleOAuthService.getGoogleToken(code).getBody();
+//
+//        GoogleResDto googleResDto = googleOAuthService.googleOAuth(googleToken).getBody();
+//
+//        return ResponseEntity.ok(googleResDto);
+//    }
 
-        return ResponseEntity.ok(googleResDto);
+    public ResponseEntity<GoogleResDto> googleOAuth(@RequestParam(name = "code") String code) {
+        ResponseEntity<String> tokenResponse = googleOAuthService.getGoogleToken(code);
+        if (tokenResponse.getStatusCode().is2xxSuccessful()) {
+            String googleToken = tokenResponse.getBody();
+            ResponseEntity<GoogleResDto> userResponse = googleOAuthService.googleOAuth(googleToken);
+
+            return ResponseEntity.ok(userResponse.getBody());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new GoogleResDto("토큰 요청 실패"));
     }
 }
