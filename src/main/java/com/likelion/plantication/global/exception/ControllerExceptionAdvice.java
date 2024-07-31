@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 @RestControllerAdvice
 public class ControllerExceptionAdvice {
 
@@ -15,6 +19,7 @@ public class ControllerExceptionAdvice {
         return ResponseEntity.status(e.getHttpStatus())
                 .body(errorMessage);
     }
+
 
     @ExceptionHandler(ForbiddenException.class)
     protected ResponseEntity<String> handleForbiddenException(ForbiddenException e) {
