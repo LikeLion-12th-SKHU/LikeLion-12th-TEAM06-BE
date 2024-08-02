@@ -14,6 +14,8 @@ import com.likelion.plantication.plantGuide.api.dto.response.GuideInfoResDto;
 import com.likelion.plantication.plantGuide.api.dto.response.GuideListResDto;
 import com.likelion.plantication.plantGuide.domain.PlantGuide;
 import com.likelion.plantication.plantGuide.domain.repository.GuideRepository;
+import com.likelion.plantication.user.domain.User;
+import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;

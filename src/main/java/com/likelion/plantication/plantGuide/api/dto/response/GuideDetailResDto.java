@@ -18,7 +18,7 @@ public record GuideDetailResDto(
     public static GuideDetailResDto from(PlantGuide plantGuide) {
         return GuideDetailResDto.builder()
                 .id(plantGuide.getId())
-                .userId(plantGuide.getUser().getId())
+                .userId(plantGuide.getUser().getUserId())
                 .title(plantGuide.getTitle())
                 .sentence(plantGuide.getSentence())
                 .content(plantGuide.getContent())

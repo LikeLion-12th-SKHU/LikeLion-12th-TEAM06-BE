@@ -10,6 +10,8 @@ import com.likelion.plantication.diaryComment.domain.repository.DiaryCommentRepo
 import com.likelion.plantication.global.exception.ForbiddenException;
 import com.likelion.plantication.global.exception.NotFoundException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
+import com.likelion.plantication.user.domain.User;
+import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
@@ -60,7 +62,7 @@ public class DiaryCommentService {
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getId(); // 수정하려는 일기의 사용자 id
+        Long id = diaryComment.getUser().getUserId(); // 수정하려는 일기의 사용자 id
         Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
 
         if (!id.equals(LoginId)) {
@@ -84,7 +86,7 @@ public class DiaryCommentService {
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getId(); // 삭제하려는 일기의 사용자 id
+        Long id = diaryComment.getUser().getUserId(); // 삭제하려는 일기의 사용자 id
         Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
 
         if (!id.equals(LoginId)) {

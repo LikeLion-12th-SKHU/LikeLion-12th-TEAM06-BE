@@ -10,6 +10,8 @@ import com.likelion.plantication.global.exception.ForbiddenException;
 import com.likelion.plantication.global.exception.NotFoundException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.service.S3Service;
+import com.likelion.plantication.user.domain.User;
+import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,14 +75,16 @@ public class DiaryService {
 
     // 사용자 id로 사용자가 쓴 일기 조회
     @Transactional
-    public DiaryListResDto diaryFindByUserId(Principal principal) {
-        Long id = Long.parseLong(principal.getName());
-        List<Diary> diaries = diaryRepository.findByUserId(id).orElseThrow(
-                () -> new NotFoundException(
-                        ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
-                        ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
+    public DiaryListResDto diaryFindByUserId(Long userId) {
+        List<Diary> diaries = diaryRepository.findByUser_UserId(userId);
 
-        // Diary객체를 DiaryInfoResDto로 변환
+        if (diaries.isEmpty()) {
+            throw new NotFoundException(
+                    ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
+                    ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage());
+        }
+
+        // Diary 객체를 DiaryInfoResDto로 변환
         List<DiaryInfoResDto> diaryInfoResDtoList = diaries.stream()
                 .map(DiaryInfoResDto::from)
                 .toList();
@@ -109,7 +114,7 @@ public class DiaryService {
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diary.getUser().getId(); // 수정하려는 일기의 사용자 id
+        Long id = diary.getUser().getUserId(); // 수정하려는 일기의 사용자 id
         Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
 
         if (!id.equals(LoginId)) {
@@ -141,7 +146,7 @@ public class DiaryService {
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diary.getUser().getId(); // 삭제하려는 일기의 사용자 id
+        Long id = diary.getUser().getUserId(); // 삭제하려는 일기의 사용자 id
         Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
 
         if (!id.equals(LoginId)) {

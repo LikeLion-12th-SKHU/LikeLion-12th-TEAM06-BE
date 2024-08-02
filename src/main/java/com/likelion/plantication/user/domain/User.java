@@ -1,5 +1,8 @@
 package com.likelion.plantication.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.likelion.plantication.diary.domain.Diary;
+import com.likelion.plantication.diaryLike.domain.DiaryLike;
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import jakarta.persistence.*;
@@ -9,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Entity
@@ -49,6 +54,14 @@ public class User {
     @Column(name = "ROLE", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diary> diaries = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryLike> diaryLikes = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface DiaryLikeRepository extends JpaRepository<DiaryLike, Long> {
-    Optional<DiaryLike> findByDiaryIdAndUserId(Long diaryId, Long userId);
+    Optional<DiaryLike> findByDiary_IdAndUser_UserId(Long diaryId, Long userId);
+
     Long countByDiaryId(Long diaryId);
 }

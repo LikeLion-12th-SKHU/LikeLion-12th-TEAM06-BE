@@ -18,7 +18,7 @@ public enum SuccessCode {
     DELETE_SUCCESS(HttpStatus.OK, "성공적으로 삭제되었습니다."),
 
     // 201
-    USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입 되었습니다.");
+    USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입 되었습니다."),
   
     POST_SAVE_SUCCESS(HttpStatus.CREATED, " 성공적으로 등록되었습니다.");
 
