@@ -1,5 +1,7 @@
 package com.likelion.plantication.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.likelion.plantication.challenge.domain.Challenge;
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import jakarta.persistence.*;
@@ -9,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Entity
@@ -45,10 +49,13 @@ public class User {
     @Column(name = "MODIFIED_AT")
     private LocalDateTime modifiedAt;
 
-
     @Column(name = "ROLE", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Challenge> challenges = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
