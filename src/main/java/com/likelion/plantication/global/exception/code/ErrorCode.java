@@ -22,10 +22,19 @@ public enum ErrorCode {
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     AUTHENTICATION_FAILED_EXCEPTION(HttpStatus.FORBIDDEN, "인증에 실패했습니다."),
 
+
     // 404
     EMAIL_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이메일을 찾을 수 없습니다."),
     ID_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 ID를 찾을 수 없습니다."),
     USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
+
+    DIARY_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 일기가 없습니다."),
+    COMMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 댓글이 없습니다."),
+    LIKE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 좋아요가 없습니다."),
+    GUIDE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 도감이 없습니다."),
+
+    // 409 CONFLICT
+    LIKE_ALREADY_EXISTS_EXCEPTION(HttpStatus.CONFLICT, "해당 일기의 좋아요가 이미 존재합니다."),
 
     // 500
     CREATE_TOKEN_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "에러로 인해 토큰을 생성할 수 없습니다."),
