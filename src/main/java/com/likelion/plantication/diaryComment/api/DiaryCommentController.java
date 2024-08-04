@@ -1,4 +1,4 @@
-package com.likelion.plantication.diaryComment.api.dto;
+package com.likelion.plantication.diaryComment.api;
 
 import com.likelion.plantication.diaryComment.api.dto.request.DiaryCommentSaveReqDto;
 import com.likelion.plantication.diaryComment.api.dto.request.DiaryCommentUpdateReqDto;
@@ -20,22 +20,25 @@ public class DiaryCommentController {
     private final DiaryCommentService diaryCommentService;
 
     // 익명 일기 댓글 작성
-    @PostMapping("/{diaryId}/comment")
+    @PostMapping("/{diary_id}/comment")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<DiaryCommentInfoResDto> commentSave(@RequestBody DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
-        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.commentSave(diaryCommentSaveReqDto);
+    public ResponseEntity<DiaryCommentInfoResDto> commentSave(
+            @PathVariable("diary_id") Long diaryId,
+            @RequestBody DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
+        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.commentSave(diaryId, diaryCommentSaveReqDto);
         return ResponseEntity
                 .status(SuccessCode.POST_SAVE_SUCCESS.getHttpStatusCode())
                 .body(diaryCommentInfoResDto);
     }
 
     // 익명 일기 댓글 수정
-    @PatchMapping("/{diaryId}/comment/{id}")
+    @PatchMapping("/{diary_id}/comment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DiaryCommentInfoResDto> updateComment(
-            @RequestBody DiaryCommentUpdateReqDto diaryCommentUpdateReqDto,
-            Principal principal) throws IOException {
-        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.updateComment(diaryCommentUpdateReqDto, principal);
+            @PathVariable("id") Long commentId,
+            @RequestParam Long userId,
+            @RequestBody DiaryCommentUpdateReqDto diaryCommentUpdateReqDto) throws IOException {
+        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.updateComment(commentId, userId, diaryCommentUpdateReqDto);
 
         return ResponseEntity
                 .status(SuccessCode.PATCH_UPDATE_SUCCESS.getHttpStatusCode())
@@ -43,11 +46,11 @@ public class DiaryCommentController {
     }
 
     // 익명 일기 댓글 삭제
-    @DeleteMapping("/{diaryId}/comment/{id}")
+    @DeleteMapping("/{diary_id}/comment/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> deleteComment(@PathVariable Long commentId,
-                                                Principal principal) {
-        diaryCommentService.deleteComment(commentId, principal);
+    public ResponseEntity<String> deleteComment(@PathVariable("id") Long commentId,
+                                                @RequestParam Long userId) {
+        diaryCommentService.deleteComment(commentId, userId);
 
         return ResponseEntity
                 .status(SuccessCode.DELETE_SUCCESS.getHttpStatusCode())
