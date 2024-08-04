@@ -2,7 +2,6 @@ package com.likelion.plantication.diaryLike.application;
 
 import com.likelion.plantication.diary.domain.Diary;
 import com.likelion.plantication.diary.domain.repository.DiaryRepository;
-import com.likelion.plantication.diaryLike.api.dto.request.DiaryLikeSaveReqDto;
 import com.likelion.plantication.diaryLike.api.dto.response.DiaryLikeInfoResDto;
 import com.likelion.plantication.diaryLike.domain.DiaryLike;
 import com.likelion.plantication.diaryLike.domain.repository.DiaryLikeRepository;
@@ -26,12 +25,12 @@ public class DiaryLikeService {
     private final UserRepository userRepository;
 
     // 좋아요 생성
-    public DiaryLikeInfoResDto addLike(DiaryLikeSaveReqDto diaryLikeSaveReqDto) {
-        Diary diary = diaryRepository.findById(diaryLikeSaveReqDto.diaryId())
+    public DiaryLikeInfoResDto addLike(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
-        User user = userRepository.findById(diaryLikeSaveReqDto.userId())
+        User user = userRepository.findById(diary.getUser().getUserId())
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));

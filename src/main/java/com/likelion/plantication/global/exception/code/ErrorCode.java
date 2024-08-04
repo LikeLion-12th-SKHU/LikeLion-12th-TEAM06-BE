@@ -32,6 +32,7 @@ public enum ErrorCode {
     COMMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 댓글이 없습니다."),
     LIKE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 좋아요가 없습니다."),
     GUIDE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 도감이 없습니다."),
+    INQUIRY_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 문의가 없습니다."),
 
     // 409 CONFLICT
     LIKE_ALREADY_EXISTS_EXCEPTION(HttpStatus.CONFLICT, "해당 일기의 좋아요가 이미 존재합니다."),

@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findById(Diary diary);
-    List<Diary> findByUser_UserId(Long userId);
+    Optional<List<Diary>> findByUser_UserId(Long userId);
 }

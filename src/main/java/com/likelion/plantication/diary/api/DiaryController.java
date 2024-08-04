@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,8 +48,8 @@ public class DiaryController {
     public ResponseEntity<DiaryInfoResDto> diarySave(
             @RequestPart("diary")DiarySaveReqDto diarySaveReqDto,
             @RequestPart("image")MultipartFile image,
-            Principal principal) throws IOException {
-        DiaryInfoResDto diaryInfoResDto = diaryService.diarySave(diarySaveReqDto, image, principal);
+            @RequestParam Long userId) throws IOException {
+        DiaryInfoResDto diaryInfoResDto = diaryService.diarySave(diarySaveReqDto, image, userId);
         return ResponseEntity
                 .status(SuccessCode.POST_SAVE_SUCCESS.getHttpStatusCode())
                 .body(diaryInfoResDto);
@@ -63,8 +62,8 @@ public class DiaryController {
             @PathVariable("diaryId") Long diaryId,
             @RequestPart("diary")DiaryUpdateReqDto diaryUpdateReqDto,
             @RequestPart("image") MultipartFile image,
-            Principal principal) throws IOException {
-        DiaryInfoResDto diaryInfoResDto = diaryService.updateDiary(diaryId, diaryUpdateReqDto, image, principal);
+            @RequestParam Long userId) throws IOException {
+        DiaryInfoResDto diaryInfoResDto = diaryService.updateDiary(diaryId, diaryUpdateReqDto, image, userId);
         return ResponseEntity
                 .status(SuccessCode.PATCH_UPDATE_SUCCESS.getHttpStatusCode())
                 .body(diaryInfoResDto);
@@ -75,8 +74,8 @@ public class DiaryController {
     @DeleteMapping("/{diaryId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> deleteDiary(@PathVariable("diaryId") Long diaryId,
-                                              Principal principal) {
-        diaryService.deleteDiary(diaryId, principal);
+                                              @RequestParam Long userId) {
+        diaryService.deleteDiary(diaryId, userId);
         return ResponseEntity
                 .status(SuccessCode.DELETE_SUCCESS.getHttpStatusCode())
                 .body("삭제되었습니다.");
