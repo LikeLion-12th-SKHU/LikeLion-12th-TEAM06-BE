@@ -35,7 +35,7 @@ public class DiaryLikeService {
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        if (diaryLikeRepository.findByDiaryIdAndUser_UserId(diaryId, user.getUserId()).isPresent()) {
+        if (diaryLikeRepository.findByDiary_IdAndUser_UserId(diary.getId(), user.getUserId()).isPresent()) {
             throw new AlreadyExistsException(
                     ErrorCode.LIKE_ALREADY_EXISTS_EXCEPTION,
                     ErrorCode.LIKE_ALREADY_EXISTS_EXCEPTION.getMessage());
@@ -53,7 +53,7 @@ public class DiaryLikeService {
 
     // 좋아요 삭제
     public void deleteLike(Long diaryId, Long userId) {
-        DiaryLike diaryLike = diaryLikeRepository.findByDiaryIdAndUser_UserId(diaryId, userId)
+        DiaryLike diaryLike = diaryLikeRepository.findByDiary_IdAndUser_UserId(diaryId, userId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.LIKE_NOT_FOUND_EXCEPTION,
                         ErrorCode.LIKE_NOT_FOUND_EXCEPTION.getMessage()));

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -93,6 +94,7 @@ public class DiaryService {
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
         Long id = diary.getUser().getUserId(); // 수정하려는 일기의 사용자 id
+
         if (!id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,
