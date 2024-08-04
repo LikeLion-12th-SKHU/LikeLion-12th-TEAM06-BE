@@ -10,6 +10,8 @@ import com.likelion.plantication.diaryComment.domain.repository.DiaryCommentRepo
 import com.likelion.plantication.global.exception.ForbiddenException;
 import com.likelion.plantication.global.exception.NotFoundException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
+import com.likelion.plantication.user.domain.User;
+import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
@@ -28,11 +30,13 @@ public class DiaryCommentService {
 
     // 일기 댓글 생성
     @Transactional
-    public DiaryCommentInfoResDto commentSave(DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
-        Diary diary = diaryRepository.findById(diaryCommentSaveReqDto.diaryId())
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 일기가 존재하지 않습니다."));
+    public DiaryCommentInfoResDto commentSave(Long diaryId, DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
+                        ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
-        User user = userRepository.findById(diaryCommentSaveReqDto.userId())
+        User user = userRepository.findById(diary.getUser().getUserId())
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
@@ -53,17 +57,18 @@ public class DiaryCommentService {
 
     // 일기 댓글 수정
     @Transactional
-    public DiaryCommentInfoResDto updateComment(DiaryCommentUpdateReqDto diaryCommentUpdateReqDto,
-                                                Principal principal) throws IOException {
-        DiaryComment diaryComment = diaryCommentRepository.findById(diaryCommentUpdateReqDto.id())
+    public DiaryCommentInfoResDto updateComment(Long commentId,
+                                                Long userId,
+                                                DiaryCommentUpdateReqDto diaryCommentUpdateReqDto
+    ) throws IOException {
+        DiaryComment diaryComment = diaryCommentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getId(); // 수정하려는 일기의 사용자 id
-        Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
+        Long id = diaryComment.getUser().getUserId(); // 수정하려는 일기의 사용자 id
 
-        if (!id.equals(LoginId)) {
+        if (!id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,
                     ErrorCode.ACCESS_DENIED_EXCEPTION.getMessage());
@@ -78,16 +83,14 @@ public class DiaryCommentService {
 
     // 일기 댓글 삭제
     @Transactional
-    public void deleteComment(Long commentId, Principal principal) {
+    public void deleteComment(Long commentId, Long userId) {
         DiaryComment diaryComment = diaryCommentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getId(); // 삭제하려는 일기의 사용자 id
-        Long LoginId = Long.parseLong(principal.getName()); // 현재 삭제를 하려고 하는 사용자 id
-
-        if (!id.equals(LoginId)) {
+        Long id = diaryComment.getUser().getUserId(); // 삭제하려는 일기의 사용자 id
+        if (!id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,
                     ErrorCode.ACCESS_DENIED_EXCEPTION.getMessage());

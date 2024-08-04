@@ -1,6 +1,7 @@
 package com.likelion.plantication.diaryLike.domain;
 
 import com.likelion.plantication.diary.domain.Diary;
+import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

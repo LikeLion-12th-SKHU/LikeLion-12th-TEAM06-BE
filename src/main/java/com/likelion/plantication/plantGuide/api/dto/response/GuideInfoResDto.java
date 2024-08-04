@@ -19,7 +19,7 @@ public record GuideInfoResDto(
     public static GuideInfoResDto from(PlantGuide plantGuide) {
         return GuideInfoResDto.builder()
                 .id(plantGuide.getId())
-                .userId(plantGuide.getUser().getId())
+                .userId(plantGuide.getUser().getUserId())
                 .title(plantGuide.getTitle())
                 .sentence(plantGuide.getSentence())
                 .image(plantGuide.getImage())

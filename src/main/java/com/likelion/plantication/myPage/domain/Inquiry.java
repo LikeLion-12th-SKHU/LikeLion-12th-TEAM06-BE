@@ -1,4 +1,4 @@
-package com.likelion.plantication.plantGuide.domain;
+package com.likelion.plantication.myPage.domain;
 
 import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
@@ -11,32 +11,25 @@ import org.joda.time.DateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlantGuide {
+public class Inquiry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "plantGuide_id", nullable = false)
+    @Column(name = "inquiry_id", nullable = false)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String title;
-    private String sentence;
+    private String subject;
     private String content;
-    private String image;
     private DateTime createdAt;
-    private int view;
 
     @Builder
-    public PlantGuide(User user, String title, String sentence, String content,
-                      String image, DateTime createdAt, int view) {
+    public Inquiry(User user, String subject, String content, DateTime createdAt) {
         this.user = user;
-        this.title = title;
-        this.sentence = sentence;
+        this.subject = subject;
         this.content = content;
-        this.image = image;
         this.createdAt = createdAt;
-        this.view = view;
     }
 }
