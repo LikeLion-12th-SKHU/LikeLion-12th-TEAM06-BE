@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiaryLikeRepository extends JpaRepository<DiaryLike, Long> {
-    Optional<DiaryLike> findByDiaryIdAndUser_UserId(Long diaryId, Long userId);
+    Optional<DiaryLike> findByDiary_IdAndUser_UserId(Long diaryId, Long userId);
     Long countByDiaryId(Long diaryId);
     Optional<List<DiaryLike>> findByUser_UserId(Long userId);
 }
