@@ -1,0 +1,104 @@
+{
+  "posts": [
+    {
+      "id": "post1",
+      "user": "user1",
+      "date": "2024-08-01",
+      "likes": 150,
+      "comments": 20,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/560beeec-04b2-41f7-b284-535f3e746a29.png",
+      "title": "여름의 시작",
+      "content": "오늘은 여름의 시작을 알리는 날이었어요. 날씨도 덥고, 친구들과 함께 바닷가에 놀러 갔습니다. 너무 즐거운 시간이었어요!"
+    },
+    {
+      "id": "post2",
+      "user": "user2",
+      "date": "2024-08-02",
+      "likes": 200,
+      "comments": 30,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/cb1b3551-676c-4873-85c0-f575931af270.png",
+      "title": "도시의 밤",
+      "content": "오늘은 도시의 밤을 만끽했습니다. 친구들과 함께 야경을 보며 산책을 했고, 멋진 사진도 많이 찍었어요."
+    },
+    {
+      "id": "post3",
+      "user": "user3",
+      "date": "2024-08-03",
+      "likes": 300,
+      "comments": 40,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/a4f5d018-1ca4-4eed-b77f-ba359c18ab09.png",
+      "title": "산책의 즐거움",
+      "content": "오늘은 아침 일찍 일어나서 공원에 산책을 나갔습니다. 상쾌한 공기를 마시며 걷는 시간이 너무 행복했어요."
+    },
+    {
+      "id": "post4",
+      "user": "user4",
+      "date": "2024-08-04",
+      "likes": 120,
+      "comments": 10,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/239dd230-8c26-43b0-abf1-eb5dd2d7eafb.png",
+      "title": "친구와의 만남",
+      "content": "오랜만에 친구를 만났습니다. 함께 점심을 먹고, 옛 추억을 떠올리며 이야기를 나누었습니다."
+    },
+    {
+      "id": "post5",
+      "user": "user5",
+      "date": "2024-08-05",
+      "likes": 180,
+      "comments": 25,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/3e9231b9-9127-424f-a747-9a84bc3f50d8.png",
+      "title": "새로운 취미",
+      "content": "오늘은 새로운 취미를 시작했습니다. 그림 그리기 수업에 참석했는데, 정말 재미있고 힐링되는 시간이었어요."
+    },
+    {
+      "id": "post6",
+      "user": "user6",
+      "date": "2024-08-06",
+      "likes": 250,
+      "comments": 35,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/f2c1432d-90b4-44ea-b504-8cd08966df25.png",
+      "title": "휴식의 하루",
+      "content": "오늘은 아무런 일정 없이 집에서 휴식을 취했습니다. 책을 읽고, 영화를 보며 하루를 보냈습니다."
+    },
+    {
+      "id": "post7",
+      "user": "user7",
+      "date": "2024-08-07",
+      "likes": 220,
+      "comments": 28,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/0d00eb9d-bdc0-44f3-8d2f-2854eed1eaed.png",
+      "title": "맛집 탐방",
+      "content": "오늘은 친구들과 함께 맛집을 탐방했습니다. 새로운 음식을 맛보고, 즐거운 시간을 보냈습니다."
+    },
+    {
+      "id": "post8",
+      "user": "user8",
+      "date": "2024-08-08",
+      "likes": 175,
+      "comments": 22,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/a760d9a8-f395-4c13-a935-382e0b77aca3.png",
+      "title": "해변에서의 하루",
+      "content": "오늘은 해변에서 하루를 보냈습니다. 시원한 바다에 발을 담그고, 모래사장에서 놀았습니다."
+    },
+    {
+      "id": "post9",
+      "user": "user9",
+      "date": "2024-08-09",
+      "likes": 195,
+      "comments": 24,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/543fbae0-9035-4086-908c-993ba5b7bc91.png",
+      "title": "등산의 즐거움",
+      "content": "오늘은 친구들과 함께 등산을 했습니다. 정상에서 바라본 풍경이 정말 아름다웠어요."
+    },
+    {
+      "id": "post10",
+      "user": "user10",
+      "date": "2024-08-10",
+      "likes": 205,
+      "comments": 27,
+      "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/756463b6-b042-4575-9b1c-5b139593a34a.png",
+      "title": "카페에서의 오후",
+      "content": "오늘 오후는 카페에서 시간을 보냈습니다. 커피를 마시며 책을 읽는 시간이 정말 평화로웠어요."
+    }
+  ]
+}
