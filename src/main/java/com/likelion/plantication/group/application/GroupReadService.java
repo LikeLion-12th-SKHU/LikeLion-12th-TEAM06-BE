@@ -4,7 +4,7 @@ import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.group.api.dto.response.GroupResDto;
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.group.domain.PlantGroup;
 import com.likelion.plantication.group.domain.repository.GroupRepository;
 import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.AccessLevel;
@@ -25,7 +25,7 @@ public class GroupReadService {
     private final UserRepository userRepository;
 
     public ResponseEntity<List<GroupResDto>> getAllGroups() {
-        List<Groups> groups = groupRepository.findAll();
+        List<PlantGroup> groups = groupRepository.findAll();
 
         List<GroupResDto> groupResDtos = groups.stream()
                 .map(GroupResDto::of)
@@ -35,7 +35,7 @@ public class GroupReadService {
     }
 
     public ResponseEntity<GroupResDto> getGroupById(Long groupId) {
-        Groups groups = groupRepository.findById(groupId)
+        PlantGroup groups = groupRepository.findById(groupId)
                 .orElseThrow(() -> new CustomException(ErrorCode.GROUP_NOT_FOUND_EXCEPTION, ErrorCode.GROUP_NOT_FOUND_EXCEPTION.getMessage()));
 
         // 성공 응답

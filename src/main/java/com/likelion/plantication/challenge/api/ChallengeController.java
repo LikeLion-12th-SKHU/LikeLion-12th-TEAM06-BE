@@ -1,21 +1,28 @@
-package com.likelion.plantication.challenge.api.dto;
+package com.likelion.plantication.challenge.api;
 
 import com.likelion.plantication.challenge.api.dto.request.ChallengeCreateReqDto;
 import com.likelion.plantication.challenge.api.dto.request.ChallengeUpdateResDto;
+import com.likelion.plantication.challenge.api.dto.response.ChallengeListResDto;
 import com.likelion.plantication.challenge.api.dto.response.ChallengeResDto;
 import com.likelion.plantication.challenge.application.ChallengeCreateService;
 import com.likelion.plantication.challenge.application.ChallengeReadService;
 import com.likelion.plantication.challenge.application.ChallengeUDService;
+import com.likelion.plantication.diary.api.dto.response.DiaryListResDto;
 import com.likelion.plantication.global.exception.code.SuccessCode;
+import com.likelion.plantication.user.api.dto.request.UserSignUpReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,7 +35,7 @@ public class ChallengeController {
     private final ChallengeReadService challengeReadService;
     private final ChallengeUDService challengeUDService;
 
-    @PostMapping("/create")
+    @PostMapping(name = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "챌린지 작성",
             description = "챌린지를 작성합니다.",
@@ -39,9 +46,10 @@ public class ChallengeController {
             }
     )
     public ResponseEntity<ChallengeResDto> createDiary(
-            @Valid @RequestBody ChallengeCreateReqDto reqDto, @RequestParam Long userId) {
-
-        ChallengeResDto resDto = challengeCreateService.createChallenge(reqDto, userId).getBody();
+            @RequestPart("challengeCreateReqDto") ChallengeCreateReqDto challengeCreateReqDto,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+            @RequestParam Long userId ) throws IOException {
+        ChallengeResDto resDto = challengeCreateService.createChallenge(challengeCreateReqDto, profileImage, userId).getBody();
         return ResponseEntity.status(SuccessCode.CHALLENGE_CREATE_SUCCESS.getHttpStatus()).body(resDto);
     }
 
@@ -55,12 +63,13 @@ public class ChallengeController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<List<ChallengeResDto>> getAllChallenges() {
+    public ResponseEntity<ChallengeListResDto> getAllChallenges() {
+        List<ChallengeResDto> challengeResDtos = challengeReadService.getAllChallenges();
 
-        List<ChallengeResDto> data = challengeReadService.getAllChallenges().getBody();
-        return ResponseEntity.status(SuccessCode.CHALLENGE_GET_SUCCESS.getHttpStatus()).body(data);
+        ChallengeListResDto challengeListResDto = ChallengeListResDto.of(challengeResDtos);
+
+        return ResponseEntity.ok(challengeListResDto);
     }
-
 
     @GetMapping("/read/{challengeId}")
     @Operation(
@@ -90,9 +99,13 @@ public class ChallengeController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<ChallengeResDto> updateDiary(@PathVariable Long challengeId, @RequestParam Long userId, @Valid @RequestBody ChallengeUpdateResDto challengeUpdateResDto) {
+    public ResponseEntity<ChallengeResDto> updateDiary(
+            @RequestParam Long challengeId,
+            @RequestPart("challengeUpdateResDto") ChallengeUpdateResDto challengeUpdateResDto,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+            @RequestParam Long userId) throws IOException {
 
-        ChallengeResDto resDto = challengeUDService.updateChallenge(challengeId, userId, challengeUpdateResDto).getBody();
+        ChallengeResDto resDto = challengeUDService.updateChallenge(challengeId, challengeUpdateResDto, profileImage, userId).getBody();
         return ResponseEntity.status(SuccessCode.CHALLENGE_UPDATE_SUCCESS.getHttpStatus()).body(resDto);
     }
 

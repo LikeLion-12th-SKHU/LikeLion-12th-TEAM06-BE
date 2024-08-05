@@ -5,7 +5,7 @@ import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.group.api.dto.request.GroupUpdateReqDto;
 import com.likelion.plantication.group.api.dto.response.GroupResDto;
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.group.domain.PlantGroup;
 import com.likelion.plantication.group.domain.repository.GroupRepository;
 import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
@@ -27,7 +27,7 @@ public class GroupUDService {
         User user = userRepository.findById(userId).
                 orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION, ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Groups groups = groupRepository.findById(groupId)
+        PlantGroup groups = groupRepository.findById(groupId)
                 .orElseThrow(() -> new CustomException(ErrorCode.GROUP_NOT_FOUND_EXCEPTION, ErrorCode.GROUP_NOT_FOUND_EXCEPTION.getMessage()));
 
         // 작성자와 로그인한 유저가 같은지 확인
@@ -55,7 +55,7 @@ public class GroupUDService {
         User user = userRepository.findById(userId).
                 orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION, ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Groups groups = groupRepository.findById(groupId)
+        PlantGroup groups = groupRepository.findById(groupId)
                 .orElseThrow(() -> new CustomException(ErrorCode.GROUP_NOT_FOUND_EXCEPTION, ErrorCode.GROUP_NOT_FOUND_EXCEPTION.getMessage()));
 
         // 작성자와 로그인한 유저가 같은지 확인

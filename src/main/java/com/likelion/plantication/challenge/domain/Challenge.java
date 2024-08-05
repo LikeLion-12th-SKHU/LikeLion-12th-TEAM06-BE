@@ -1,6 +1,7 @@
 package com.likelion.plantication.challenge.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.likelion.plantication.challengeGroup.domain.ChallengeGroup;
 import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -55,6 +56,9 @@ public class Challenge {
     @Enumerated(EnumType.STRING)
     private ChallengeStatus status;
 
+    @OneToOne(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ChallengeGroup challengeGroup;
+
     // hashtag
 
     @PreUpdate
@@ -94,5 +98,9 @@ public class Challenge {
         this.createdAt = createdAt;
         this.start = start;
         this.end = end;
+    }
+
+    public void updateImage(String image) {
+        this.image = image;
     }
 }

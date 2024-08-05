@@ -1,10 +1,12 @@
 package com.likelion.plantication.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.likelion.plantication.challenge.domain.Challenge;
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.challengeGroup.domain.ChallengeGroup;
 import com.likelion.plantication.diary.domain.Diary;
 import com.likelion.plantication.diaryLike.domain.DiaryLike;
+import com.likelion.plantication.group.domain.PlantGroup;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,13 +55,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Challenge> challenges = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Groups> groups = new ArrayList<>();
+    private List<PlantGroup> groups = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -68,6 +70,15 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiaryLike> diaryLikes = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "USER_CHALLENGE_GROUP",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CHALLENGE_GROUP_ID")
+    )
+    private List<ChallengeGroup> challengeGroups = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

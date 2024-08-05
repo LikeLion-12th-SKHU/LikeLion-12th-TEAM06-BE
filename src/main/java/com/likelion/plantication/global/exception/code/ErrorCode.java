@@ -33,6 +33,9 @@ public enum ErrorCode {
     USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
     CHALLENGE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지를 찾을 수 없습니다."),
     GROUP_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."),
+    CHALLENGE_GROUP_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹을 찾을 수 없습니다."),
+    CHALLENGE_GROUP_STATUS_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹 참여 상태를 찾을 수 없습니다."),
+    PARTICIPATION_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹 참가자를 찾을 수 없습니다."),
 
     DIARY_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 일기가 없습니다."),
     COMMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 댓글이 없습니다."),

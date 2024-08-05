@@ -1,6 +1,6 @@
 package com.likelion.plantication.group.api.dto.request;
 
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.group.domain.PlantGroup;
 import com.likelion.plantication.user.domain.User;
 import jakarta.validation.constraints.*;
 
@@ -27,8 +27,8 @@ public record GroupCreateReqDto(
         @PastOrPresent(message = "작성일은 과거 또는 현재 날짜여야 합니다.")
         LocalDateTime createdAt
 ) {
-    public Groups toEntity(User user) {
-        return Groups.builder()
+    public PlantGroup toEntity(User user) {
+        return PlantGroup.builder()
                 .title(this.title)
                 .openStatus(this.openStatus)
                 .image(this.image)

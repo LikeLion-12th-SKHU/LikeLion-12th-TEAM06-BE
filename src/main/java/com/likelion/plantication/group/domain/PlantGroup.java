@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "PLANT_GROUPS")
-public class Groups {
+public class PlantGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +62,7 @@ public class Groups {
     }
 
     @Builder
-    public Groups(String title, boolean openStatus, Integer people, String content, String image, LocalDateTime createdAt, User user) {
+    public PlantGroup(String title, boolean openStatus, Integer people, String content, String image, LocalDateTime createdAt, User user) {
         this.title = title;
         this.openStatus = openStatus;
         this.people = people;

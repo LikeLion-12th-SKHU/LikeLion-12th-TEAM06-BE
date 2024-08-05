@@ -27,7 +27,7 @@ public record ChallengeResDto(
         @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
         LocalDate end,
 
-        User user,
+        String nickname,
         ChallengeStatus status
 ) {
     public static ChallengeResDto of(Challenge challenge) {
@@ -40,7 +40,7 @@ public record ChallengeResDto(
                 .modifiedAt(challenge.getModifiedAt())
                 .start(challenge.getStart())
                 .end(challenge.getEnd())
-                .user(challenge.getUser())
+                .nickname(challenge.getUser().getNickname())
                 .status(challenge.getStatus())
                 .build();
     }

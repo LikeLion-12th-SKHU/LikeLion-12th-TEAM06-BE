@@ -1,6 +1,6 @@
 package com.likelion.plantication.group.api.dto.response;
 
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.group.domain.PlantGroup;
 import com.likelion.plantication.user.domain.User;
 import lombok.Builder;
 
@@ -18,7 +18,7 @@ public record GroupResDto (
         User user
 ) {
 
-    public static GroupResDto of(Groups groups) {
+    public static GroupResDto of(PlantGroup groups) {
         return GroupResDto.builder()
                 .groupId(groups.getGroupId())
                 .title(groups.getTitle())

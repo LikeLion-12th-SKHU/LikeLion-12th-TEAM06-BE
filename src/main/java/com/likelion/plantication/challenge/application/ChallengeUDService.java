@@ -7,14 +7,17 @@ import com.likelion.plantication.challenge.domain.repository.ChallengeRepository
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
+import com.likelion.plantication.global.service.S3Service;
 import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @Transactional
@@ -24,7 +27,9 @@ public class ChallengeUDService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
 
-    public ResponseEntity<ChallengeResDto> updateChallenge(Long challengeId, Long userId, ChallengeUpdateResDto challengeUpdateResDto) {
+    private final S3Service s3Service;
+
+    public ResponseEntity<ChallengeResDto> updateChallenge(Long challengeId, ChallengeUpdateResDto challengeUpdateResDto, MultipartFile image, Long userId) throws IOException {
         User user = userRepository.findById(userId).
                 orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION, ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
@@ -34,6 +39,12 @@ public class ChallengeUDService {
         // 작성자와 로그인한 유저가 같은지 확인
         if (!challenge.getUser().equals(user)) {
             throw new CustomException(ErrorCode.USER_NOT_AUTHORIZED, ErrorCode.USER_NOT_AUTHORIZED.getMessage());
+        }
+
+        // 이미지가 있을 경우 이미지도 수정
+        if (image != null && !image.isEmpty()) {
+            String updateImage = s3Service.upload(image, "challenge");
+            challenge.updateImage(updateImage);
         }
 
         // 챌린지 업데이트

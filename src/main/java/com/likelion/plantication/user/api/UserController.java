@@ -12,8 +12,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,7 +30,7 @@ public class UserController {
     private final UserLogInService userLogInService;
     private final GoogleOAuthService googleOAuthService;
 
-    @PostMapping("/signup")
+    @PostMapping(name = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "회원가입",
             description = "사용자에게 정보를 입력받아 데이터베이스에 저장하고, accessToken과 refreshToken을 발급해서 회원가입을 진행, 가입 시 입력한 사용자 정보와 반환합니다.",
@@ -35,8 +39,10 @@ public class UserController {
                     // 추후 더 추가
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             })
-    public ResponseEntity<UserSignUpResDto> signUp(@RequestBody UserSignUpReqDto userSignUpReqDto) {
-        UserSignUpResDto userSignUpResDto = userSignUpService.signUp(userSignUpReqDto).getBody();
+    public ResponseEntity<UserSignUpResDto> signUp(
+            @RequestPart("userSignUpReqDto") UserSignUpReqDto userSignUpReqDto,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+        UserSignUpResDto userSignUpResDto = userSignUpService.signUp(userSignUpReqDto, profileImage).getBody();
         return ResponseEntity.status(201).body(userSignUpResDto);
     }
 

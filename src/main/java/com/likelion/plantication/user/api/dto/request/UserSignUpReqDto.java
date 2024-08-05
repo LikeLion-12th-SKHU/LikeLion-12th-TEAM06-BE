@@ -32,8 +32,6 @@ public record UserSignUpReqDto(
         String name,
 
         @NotBlank(message = "닉네임을 필수로 입력해주세요.")
-        String nickname,
-
-        String profileImage
+        String nickname
 ){
 }

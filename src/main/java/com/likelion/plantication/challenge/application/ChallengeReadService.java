@@ -1,13 +1,12 @@
 package com.likelion.plantication.challenge.application;
 
+import com.likelion.plantication.challenge.api.dto.response.ChallengeListResDto;
 import com.likelion.plantication.challenge.api.dto.response.ChallengeResDto;
 import com.likelion.plantication.challenge.domain.Challenge;
-import com.likelion.plantication.challenge.domain.ChallengeStatus;
 import com.likelion.plantication.challenge.domain.repository.ChallengeRepository;
 import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
-import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +25,13 @@ public class ChallengeReadService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
 
-    public ResponseEntity<List<ChallengeResDto>> getAllChallenges() {
+    public List<ChallengeResDto> getAllChallenges() {
         List<Challenge> challenges = challengeRepository.findAll();
 
-        List<ChallengeResDto> challengeResDtos = challenges.stream()
+        // 엔티티를 DTO로 변환
+        return challenges.stream()
                 .map(ChallengeResDto::of)
                 .collect(Collectors.toList());
-
-        return ResponseEntity.status(SuccessCode.CHALLENGE_GET_SUCCESS.getHttpStatus()).body(challengeResDtos);
     }
 
     public ResponseEntity<ChallengeResDto> getChallengeById(Long challengeId) {

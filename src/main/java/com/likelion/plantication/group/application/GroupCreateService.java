@@ -5,7 +5,7 @@ import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.group.api.dto.request.GroupCreateReqDto;
 import com.likelion.plantication.group.api.dto.response.GroupResDto;
-import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.group.domain.PlantGroup;
 import com.likelion.plantication.group.domain.repository.GroupRepository;
 import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
@@ -29,7 +29,7 @@ public class GroupCreateService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION, ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Groups groups = groupCreateReqDto.toEntity(user);
+        PlantGroup groups = groupCreateReqDto.toEntity(user);
         groupRepository.save(groups);
 
         GroupResDto groupResDto = GroupResDto.of(groups);
