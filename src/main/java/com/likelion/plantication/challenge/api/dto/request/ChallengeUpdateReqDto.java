@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record ChallengeUpdateResDto (
+public record ChallengeUpdateReqDto(
         @NotBlank(message = "챌린지 명을 필수로 작성해주세요.")
         @Size(max = 50, message = "최대 50자까지 작성 가능합니다.")
                 String title,
@@ -16,8 +16,6 @@ public record ChallengeUpdateResDto (
         @NotBlank(message = "챌린지 내용을 필수로 작성해주세요.")
         @Size(max = 4000, message = "최대 4000자까지 작성 가능합니다.")
         String content,
-
-        String image,
 
         @NotBlank(message = "챌린지 시작일을 필수로 작성해주세요.")
         LocalDate start,
