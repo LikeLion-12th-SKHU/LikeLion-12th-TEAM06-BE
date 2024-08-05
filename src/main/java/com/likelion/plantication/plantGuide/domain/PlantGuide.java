@@ -1,5 +1,6 @@
 package com.likelion.plantication.plantGuide.domain;
 
+import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

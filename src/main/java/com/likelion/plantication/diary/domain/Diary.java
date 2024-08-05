@@ -1,6 +1,8 @@
 package com.likelion.plantication.diary.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.likelion.plantication.diary.api.dto.request.DiaryUpdateReqDto;
+import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,12 +29,13 @@ public class Diary {
     private Date modifiedAt;
 
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Builder
-    public Diary(String title, String content, String image, DateTime createdAt, Date modifiedAt User user) {
+    public Diary(String title, String content, String image, DateTime createdAt, Date modifiedAt, User user) {
         this.title = title;
         this.content = content;
         this.image = image;

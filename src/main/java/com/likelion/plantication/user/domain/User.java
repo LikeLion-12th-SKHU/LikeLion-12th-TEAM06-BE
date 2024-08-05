@@ -1,7 +1,12 @@
 package com.likelion.plantication.user.domain;
 
-import com.likelion.plantication.global.exception.CustomException;
-import com.likelion.plantication.global.exception.code.ErrorCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.likelion.plantication.challenge.domain.Challenge;
+import com.likelion.plantication.challengeGroup.domain.ChallengeGroup;
+import com.likelion.plantication.diary.domain.Diary;
+import com.likelion.plantication.diaryLike.domain.DiaryLike;
+import com.likelion.plantication.group.domain.PlantGroup;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,7 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,10 +51,34 @@ public class User {
     @Column(name = "MODIFIED_AT")
     private LocalDateTime modifiedAt;
 
-
     @Column(name = "ROLE", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Challenge> challenges = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlantGroup> groups = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diary> diaries = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryLike> diaryLikes = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "USER_CHALLENGE_GROUP",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CHALLENGE_GROUP_ID")
+    )
+    private List<ChallengeGroup> challengeGroups = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

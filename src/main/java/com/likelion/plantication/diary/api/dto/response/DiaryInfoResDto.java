@@ -9,6 +9,7 @@ import java.util.Date;
 @Builder
 public record DiaryInfoResDto(
         Long id,
+        Long userId,
         String title,
         String content,
         String image,
@@ -19,6 +20,7 @@ public record DiaryInfoResDto(
     public static DiaryInfoResDto from(Diary diary) {
         return DiaryInfoResDto.builder()
                 .id(diary.getId())
+                .userId(diary.getUser().getUserId())
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .image(diary.getImage())
