@@ -3,6 +3,7 @@ package com.likelion.plantication.diary.api.dto.response;
 import com.likelion.plantication.diary.domain.Diary;
 import lombok.Builder;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public record DiaryInfoResDto(
         String title,
         String content,
         String image,
-        DateTime createdAt,
+        Date createdAt,
         Date modifiedAt
 
 ) {

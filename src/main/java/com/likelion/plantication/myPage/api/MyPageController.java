@@ -9,6 +9,7 @@ import com.likelion.plantication.myPage.api.dto.response.InquiryListResDto;
 import com.likelion.plantication.myPage.application.InquiryService;
 import com.likelion.plantication.myPage.application.MyPageService;
 import com.likelion.plantication.plantGuide.api.dto.response.GuideDetailListResDto;
+import com.likelion.plantication.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/myPage")
+@RequestMapping("/api/v1/myPage")
 public class MyPageController {
     private final MyPageService myPageService;
     private final InquiryService inquiryService;
@@ -91,5 +92,15 @@ public class MyPageController {
         return ResponseEntity
                 .status(SuccessCode.DELETE_SUCCESS.getHttpStatusCode())
                 .body("삭제되었습니다.");
+    }
+
+    // 사용자 정보 조회
+    @GetMapping("/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<User> userFind(@PathVariable("user_id") Long userId) {
+        User user = myPageService.findUserById(userId);
+        return ResponseEntity
+                .status(SuccessCode.GET_SUCCESS.getHttpStatusCode())
+                .body(user);
     }
 }

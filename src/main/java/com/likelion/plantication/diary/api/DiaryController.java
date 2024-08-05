@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/api/v1/diary")
 public class DiaryController {
     private final DiaryService diaryService;
 
@@ -44,10 +44,9 @@ public class DiaryController {
 
     // 익명 일기 작성
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DiaryInfoResDto> diarySave(
-            @RequestPart("diary")DiarySaveReqDto diarySaveReqDto,
-            @RequestPart("image")MultipartFile image,
+            @RequestPart("diary") DiarySaveReqDto diarySaveReqDto,
+            @RequestPart("image") MultipartFile image,
             @RequestParam Long userId) throws IOException {
         DiaryInfoResDto diaryInfoResDto = diaryService.diarySave(diarySaveReqDto, image, userId);
         return ResponseEntity

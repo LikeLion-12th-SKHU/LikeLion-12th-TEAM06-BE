@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,12 +27,12 @@ public class PlantGuide {
     private String sentence;
     private String content;
     private String image;
-    private DateTime createdAt;
+    private Date createdAt;
     private int view;
 
     @Builder
     public PlantGuide(User user, String title, String sentence, String content,
-                      String image, DateTime createdAt, int view) {
+                      String image, Date createdAt, int view) {
         this.user = user;
         this.title = title;
         this.sentence = sentence;

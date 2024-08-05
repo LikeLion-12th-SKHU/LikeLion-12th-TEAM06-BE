@@ -16,12 +16,12 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/guide")
+@RequestMapping("/api/v1/guide")
 public class GuideController {
     private final GuideService guideService;
 
     // 도감 전체 조회(content 포함)
-    @GetMapping("/content")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<GuideDetailListResDto> guideFindAll() {
         GuideDetailListResDto guideDetailListResDto = guideService.guideFindAll();

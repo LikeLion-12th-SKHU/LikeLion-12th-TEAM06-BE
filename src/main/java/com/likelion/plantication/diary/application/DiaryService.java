@@ -14,6 +14,7 @@ import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,26 +37,30 @@ public class DiaryService {
     public DiaryInfoResDto diarySave(DiarySaveReqDto diarySaveReqDto, MultipartFile multipartFile,
                                      Long userId) throws IOException {
         String image = s3Service.upload(multipartFile, "diary");
-
+        System.out.println("1");
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        DateTime now = DateTime.now();
+        System.out.println("2");
+        LocalDateTime now = LocalDateTime.now();
         Date nowDate = now.toDate();
 
+        System.out.println("3");
         Diary diary = Diary.builder()
                 .title(diarySaveReqDto.title())
                 .content(diarySaveReqDto.content())
                 .image(image)
-                .createdAt(now)
+                .createdAt(nowDate)
                 .modifiedAt(nowDate)
                 .user(user)
                 .build();
 
+        System.out.println("4");
         diaryRepository.save(diary);
 
+        System.out.println("5");
         return DiaryInfoResDto.from(diary);
     }
 
@@ -93,6 +99,7 @@ public class DiaryService {
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
         Long id = diary.getUser().getUserId(); // 수정하려는 일기의 사용자 id
+
         if (!id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,

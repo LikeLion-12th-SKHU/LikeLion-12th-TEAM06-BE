@@ -1,5 +1,6 @@
 package com.likelion.plantication.diaryLike.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.likelion.plantication.diary.domain.Diary;
 import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
@@ -23,8 +24,9 @@ public class DiaryLike {
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     private Date createdAt;
