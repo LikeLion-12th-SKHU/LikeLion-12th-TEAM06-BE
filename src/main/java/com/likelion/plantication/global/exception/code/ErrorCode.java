@@ -16,6 +16,9 @@ public enum ErrorCode {
     INVALID_NICKNAME_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 닉네임 형식입니다."),
     INVALID_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 토큰입니다."),
 
+    // 401
+    USER_NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED, "권한이 허용되지 않은 유저입니다."),
+
     // 403
     AUTH_FORBIDDEN_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 제한된 토큰입니다."),
     EXPIRED_TOKEN_EXCEPTION(HttpStatus.FORBIDDEN, "토큰이 만료되었습니다."),
@@ -26,7 +29,13 @@ public enum ErrorCode {
     // 404
     EMAIL_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이메일을 찾을 수 없습니다."),
     ID_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 ID를 찾을 수 없습니다."),
+
     USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
+    CHALLENGE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지를 찾을 수 없습니다."),
+    GROUP_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."),
+    CHALLENGE_GROUP_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹을 찾을 수 없습니다."),
+    CHALLENGE_GROUP_STATUS_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹 참여 상태를 찾을 수 없습니다."),
+    PARTICIPATION_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지 그룹 참가자를 찾을 수 없습니다."),
 
     DIARY_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 일기가 없습니다."),
     COMMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 댓글이 없습니다."),

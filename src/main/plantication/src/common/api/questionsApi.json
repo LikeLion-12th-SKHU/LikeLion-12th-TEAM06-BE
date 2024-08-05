@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "option": "CD",
+    "question": "당신이 식물을 키우려고 하는 이유는 무엇인가요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/9c0330b5-7862-4bd0-b2da-a7d7fbdd6879.png",
+    "answers": [
+      {
+        "type": "C",
+        "content": "스트레스 해소"
+      },
+      {
+        "type": "D",
+        "content": "정서적 안정"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "option": "CD",
+    "question": "최근에 자주 느끼는 감정은 무엇인가요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/de92c75a-0e54-423f-a021-45df4b127473.png",
+    "answers": [
+      {
+        "type": "C",
+        "content": "편안함"
+      },
+      {
+        "type": "D",
+        "content": "우울함"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "option": "CD",
+    "question": "주로 어떤 취미를 즐기시나요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/cc200907-832e-428e-a117-30d2fda14e88.png",
+    "answers": [
+      {
+        "type": "C",
+        "content": "걷기"
+      },
+      {
+        "type": "D",
+        "content": "영화 감상"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "option": "LG",
+    "question": "집 안의 채광 상태는 어떤가요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/0e616150-fa68-41e1-b88e-24443db35f86.png",
+    "answers": [
+      {
+        "type": "L",
+        "content": "밝음"
+      },
+      {
+        "type": "G",
+        "content": "어두움"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "option": "SB",
+    "question": "식물이 놓일 공간의 크기는 어느 정도인가요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/90e366a0-dcd1-4ed1-9933-1ab65c319496.png",
+    "answers": [
+      {
+        "type": "S",
+        "content": "작은 공간 (책상 위)"
+      },
+      {
+        "type": "B",
+        "content": "넓은 공간 (큰 거실, 발코니)"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "option": "EO",
+    "question": "식물 관리에 투자할 수 있는 시간은 어느 정도인가요?",
+    "img": "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/669b08acedeeaa24165f84ee/31259fc3-b73a-4daa-b38b-1b2c2baa8bdf.png",
+    "answers": [
+      {
+        "type": "E",
+        "content": "주 1-2회"
+      },
+      {
+        "type": "O",
+        "content": "가끔 가능"
+      }
+    ]
+  }
+]

@@ -4,6 +4,7 @@ import com.likelion.plantication.global.exception.CustomException;
 import com.likelion.plantication.global.exception.code.ErrorCode;
 import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.global.jwt.TokenProvider;
+import com.likelion.plantication.global.service.S3Service;
 import com.likelion.plantication.user.api.dto.request.UserSignUpReqDto;
 import com.likelion.plantication.user.api.dto.response.UserSignUpResDto;
 import com.likelion.plantication.user.domain.Role;
@@ -17,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,13 +31,21 @@ public class UserSignUpService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
+    private final S3Service s3Service;
+
     @Transactional
-    public ResponseEntity<UserSignUpResDto> signUp(UserSignUpReqDto userSignUpReqDto) {
+    public ResponseEntity<UserSignUpResDto> signUp(UserSignUpReqDto userSignUpReqDto, MultipartFile profileImage) throws IOException {
+
         if (!userSignUpReqDto.password().equals(userSignUpReqDto.rePassword())) {
-            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCH_EXCEPTION, ErrorCode.PASSWORD_NOT_MATCH_EXCEPTION.getMessage());
+            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCH_EXCEPTION, "비밀번호가 일치하지 않습니다.");
         }
 
         String passwordEncode = passwordEncoder.encode(userSignUpReqDto.password());
+
+        String profileImageUrl = null;
+        if (profileImage != null && !profileImage.isEmpty()) {
+            profileImageUrl = s3Service.upload(profileImage, "profile-images");
+        }
 
         User user = userRepository.save(User.builder()
                 .email(userSignUpReqDto.email())
@@ -41,12 +53,10 @@ public class UserSignUpService {
                 .phone(userSignUpReqDto.phone())
                 .name(userSignUpReqDto.name())
                 .nickname(userSignUpReqDto.nickname())
-                .profileImage(userSignUpReqDto.profileImage())
+                .profileImage(profileImageUrl)
                 .role(Role.USER)
                 .build()
         );
-
-        // 중복 로직 추후 추가
 
         String accessToken = tokenProvider.createAccessToken(user);
         String refreshToken = tokenProvider.createRefreshToken(user);
@@ -61,7 +71,6 @@ public class UserSignUpService {
         UserSignUpResDto userSignUpResDto = UserSignUpResDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                // 상태 코드 추가할지말지 고민중 ...
                 .build();
 
         return ResponseEntity.status(SuccessCode.USER_CREATE_SUCCESS.getHttpStatusCode())
