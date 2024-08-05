@@ -45,7 +45,7 @@ public class GuideService {
                 .sentence(guideSaveReqDto.sentence())
                 .content(guideSaveReqDto.content())
                 .image(image)
-                .createdAt(new DateTime())
+                .createdAt(new DateTime().toDate())
                 .view(0)
                 .build();
 

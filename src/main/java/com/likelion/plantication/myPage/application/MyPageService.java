@@ -16,6 +16,7 @@ import com.likelion.plantication.plantGuide.api.dto.response.GuideDetailListResD
 import com.likelion.plantication.plantGuide.api.dto.response.GuideDetailResDto;
 import com.likelion.plantication.plantGuide.domain.PlantGuide;
 import com.likelion.plantication.plantGuide.domain.repository.GuideRepository;
+import com.likelion.plantication.user.domain.User;
 import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -93,5 +94,13 @@ public class MyPageService {
                 .toList();
 
         return GuideDetailListResDto.from(guideDetailResDtoList);
+    }
+
+    // 사용자 정보 조회
+    @Transactional
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(ErrorCode.USER_NOT_FOUND_EXCEPTION,
+                        ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
     }
 }

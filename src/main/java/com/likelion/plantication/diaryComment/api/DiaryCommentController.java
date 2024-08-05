@@ -15,7 +15,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/api/v1/diary")
 public class DiaryCommentController {
     private final DiaryCommentService diaryCommentService;
 
