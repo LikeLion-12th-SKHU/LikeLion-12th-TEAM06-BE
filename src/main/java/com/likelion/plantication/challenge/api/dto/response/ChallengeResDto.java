@@ -9,6 +9,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @Builder
 public record ChallengeResDto(
         Long challengeId,

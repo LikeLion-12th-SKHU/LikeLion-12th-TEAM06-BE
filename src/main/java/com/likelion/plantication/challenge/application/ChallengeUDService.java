@@ -41,7 +41,7 @@ public class ChallengeUDService {
                 challengeUpdateResDto.title(),
                 challengeUpdateResDto.content(),
                 challengeUpdateResDto.image(),
-                challengeUpdateResDto.createdAt().atStartOfDay(),
+                challengeUpdateResDto.createdAt(),
                 challengeUpdateResDto.start(),
                 challengeUpdateResDto.end());
         challengeRepository.save(challenge);

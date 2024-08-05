@@ -2,8 +2,7 @@ package com.likelion.plantication.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.likelion.plantication.challenge.domain.Challenge;
-import com.likelion.plantication.global.exception.CustomException;
-import com.likelion.plantication.global.exception.code.ErrorCode;
+import com.likelion.plantication.group.domain.Groups;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +12,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Entity
 @Getter
@@ -56,6 +54,10 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Challenge> challenges = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Groups> groups = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

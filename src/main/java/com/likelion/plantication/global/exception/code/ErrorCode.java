@@ -28,8 +28,10 @@ public enum ErrorCode {
     // 404
     EMAIL_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이메일을 찾을 수 없습니다."),
     ID_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 ID를 찾을 수 없습니다."),
+
     USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
     CHALLENGE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 챌린지를 찾을 수 없습니다."),
+    GROUP_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."),
 
     // 500
     CREATE_TOKEN_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "에러로 인해 토큰을 생성할 수 없습니다."),

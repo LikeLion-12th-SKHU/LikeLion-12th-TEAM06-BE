@@ -19,13 +19,21 @@ public enum SuccessCode {
     CHALLENGE_GET_SUCCESS(HttpStatus.OK, "챌린지 조회에 성공했습니다."),
     CHALLENGE_UPDATE_SUCCESS(HttpStatus.CREATED, "챌린지가 수정되었습니다."),
 
+    // group
+    GROUP_GET_SUCCESS(HttpStatus.OK, "그룹 조회에 성공했습니다."),
+    GROUP_UPDATE_SUCCESS(HttpStatus.CREATED, "그룹이 수정되었습니다."),
+
     // 201
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입 되었습니다."),
 
     CHALLENGE_CREATE_SUCCESS(HttpStatus.CREATED, "챌린지가 작성되었습니다."),
 
+    GROUP_CREATE_SUCCESS(HttpStatus.CREATED, "그룹이 작성되었습니다."),
+
     // 204
-    CHALLENGE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "챌린지를 삭제했습니다.");
+    CHALLENGE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "챌린지를 삭제했습니다."),
+
+    GROUP_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "그룹을 삭제했습니다.");
 
 
     private final HttpStatus httpStatus;
