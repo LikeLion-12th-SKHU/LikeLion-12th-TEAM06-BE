@@ -3,6 +3,8 @@ package com.likelion.plantication.user.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.likelion.plantication.challenge.domain.Challenge;
 import com.likelion.plantication.group.domain.Groups;
+import com.likelion.plantication.diary.domain.Diary;
+import com.likelion.plantication.diaryLike.domain.DiaryLike;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -58,6 +60,14 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Groups> groups = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diary> diaries = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryLike> diaryLikes = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
