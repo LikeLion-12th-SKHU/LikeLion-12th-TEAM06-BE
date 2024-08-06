@@ -31,12 +31,12 @@ public class DiaryComment {
     private Diary diary;
 
     private String content;
-    private DateTime createdAt;
-    private DateTime modifiedAt;
+    private Date createdAt;
+    private Date modifiedAt;
 
     @Builder
     public DiaryComment(User user, Diary diary, String content,
-                        DateTime createdAt, DateTime modifiedAt) {
+                        Date createdAt, Date modifiedAt) {
         this.user = user;
         this.diary = diary;
         this.content = content;
@@ -48,5 +48,5 @@ public class DiaryComment {
         this.content = diaryCommentUpdateReqDto.content();
     }
 
-    public void updateModifiedAt(DateTime modifiedAt) { this.modifiedAt = modifiedAt; }
+    public void updateModifiedAt(Date modifiedAt) { this.modifiedAt = modifiedAt; }
 }

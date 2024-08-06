@@ -25,12 +25,13 @@ public class DiaryLikeService {
     private final UserRepository userRepository;
 
     // 좋아요 생성
-    public DiaryLikeInfoResDto addLike(Long diaryId) {
+    @Transactional
+    public DiaryLikeInfoResDto addLike(Long diaryId, Long userId) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
-        User user = userRepository.findById(diary.getUser().getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
@@ -52,6 +53,7 @@ public class DiaryLikeService {
     }
 
     // 좋아요 삭제
+    @Transactional
     public void deleteLike(Long diaryId, Long userId) {
         DiaryLike diaryLike = diaryLikeRepository.findByDiary_IdAndUser_UserId(diaryId, userId)
                 .orElseThrow(() -> new NotFoundException(
@@ -61,6 +63,7 @@ public class DiaryLikeService {
     }
 
     // 좋아요 카운트
+    @Transactional
     public Long countLikes(Long diaryId) {
         return diaryLikeRepository.countByDiaryId(diaryId);
     }

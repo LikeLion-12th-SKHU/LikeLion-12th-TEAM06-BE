@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,10 +25,10 @@ public class Inquiry {
 
     private String subject;
     private String content;
-    private DateTime createdAt;
+    private Date createdAt;
 
     @Builder
-    public Inquiry(User user, String subject, String content, DateTime createdAt) {
+    public Inquiry(User user, String subject, String content, Date createdAt) {
         this.user = user;
         this.subject = subject;
         this.content = content;

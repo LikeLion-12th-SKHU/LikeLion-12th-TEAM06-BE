@@ -18,8 +18,9 @@ public class DiaryLikeController {
     @PostMapping("/{diary_id}/like")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DiaryLikeInfoResDto> addLike(
-            @PathVariable("diary_id") Long diaryId) {
-        DiaryLikeInfoResDto diaryLikeInfoResDto = diaryLikeService.addLike(diaryId);
+            @PathVariable("diary_id") Long diaryId,
+            @RequestParam Long userId) {
+        DiaryLikeInfoResDto diaryLikeInfoResDto = diaryLikeService.addLike(diaryId, userId);
 
         return ResponseEntity
                 .status(SuccessCode.POST_SAVE_SUCCESS.getHttpStatusCode())

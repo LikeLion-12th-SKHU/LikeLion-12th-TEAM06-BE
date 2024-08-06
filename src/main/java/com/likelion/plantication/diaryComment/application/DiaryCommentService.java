@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,18 +31,18 @@ public class DiaryCommentService {
 
     // 일기 댓글 생성
     @Transactional
-    public DiaryCommentInfoResDto commentSave(Long diaryId, DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
+    public DiaryCommentInfoResDto commentSave(Long diaryId, Long userId, DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION,
                         ErrorCode.DIARY_NOT_FOUND_EXCEPTION.getMessage()));
 
-        User user = userRepository.findById(diary.getUser().getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        DateTime now = new DateTime();
+        Date now = new DateTime().toDate();
 
         DiaryComment diaryComment = DiaryComment.builder()
                 .diary(diary)
@@ -66,16 +67,16 @@ public class DiaryCommentService {
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getUserId(); // 수정하려는 일기의 사용자 id
+        Long id = diaryComment.getUser() != null ? diaryComment.getUser().getUserId() : null;
 
-        if (!id.equals(userId)) {
+        if (id == null || !id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,
                     ErrorCode.ACCESS_DENIED_EXCEPTION.getMessage());
         }
 
         diaryComment.update(diaryCommentUpdateReqDto);
-        diaryComment.updateModifiedAt(new DateTime());
+        diaryComment.updateModifiedAt(new DateTime().toDate());
 
         diaryCommentRepository.save(diaryComment);
         return DiaryCommentInfoResDto.from(diaryComment);
@@ -89,8 +90,9 @@ public class DiaryCommentService {
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION,
                         ErrorCode.COMMENT_NOT_FOUND_EXCEPTION.getMessage()));
 
-        Long id = diaryComment.getUser().getUserId(); // 삭제하려는 일기의 사용자 id
-        if (!id.equals(userId)) {
+        Long id = diaryComment.getUser() != null ? diaryComment.getUser().getUserId() : null;
+
+        if (id == null || !id.equals(userId)) {
             throw new ForbiddenException(
                     ErrorCode.ACCESS_DENIED_EXCEPTION,
                     ErrorCode.ACCESS_DENIED_EXCEPTION.getMessage());

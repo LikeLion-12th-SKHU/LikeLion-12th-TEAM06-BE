@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class InquiryService {
                         ErrorCode.USER_NOT_FOUND_EXCEPTION,
                         ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
 
-        DateTime now = DateTime.now();
+        Date now = DateTime.now().toDate();
 
         Inquiry inquiry = Inquiry.builder()
                 .user(user)
