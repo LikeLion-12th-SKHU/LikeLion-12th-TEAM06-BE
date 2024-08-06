@@ -6,13 +6,15 @@ import com.likelion.plantication.myPage.domain.Inquiry;
 import lombok.Builder;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Builder
 public record InquiryInfoResDto(
     Long id,
     Long userId,
     String subject,
     String content,
-    DateTime createdAt
+    Date createdAt
 
 ) {
     public static InquiryInfoResDto from(Inquiry inquiry) {

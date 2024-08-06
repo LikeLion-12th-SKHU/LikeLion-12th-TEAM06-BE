@@ -4,14 +4,16 @@ import com.likelion.plantication.diaryComment.domain.DiaryComment;
 import lombok.Builder;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Builder
 public record DiaryCommentInfoResDto(
         Long id,
         Long diaryId,
         Long userId,
         String content,
-        DateTime createdAt,
-        DateTime modifiedAt
+        Date createdAt,
+        Date modifiedAt
 ) {
     public static DiaryCommentInfoResDto from(DiaryComment diaryComment) {
         return DiaryCommentInfoResDto.builder()

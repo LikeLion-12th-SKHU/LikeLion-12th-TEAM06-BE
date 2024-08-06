@@ -24,15 +24,16 @@ public class DiaryCommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DiaryCommentInfoResDto> commentSave(
             @PathVariable("diary_id") Long diaryId,
+            @RequestParam Long userId,
             @RequestBody DiaryCommentSaveReqDto diaryCommentSaveReqDto) {
-        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.commentSave(diaryId, diaryCommentSaveReqDto);
+        DiaryCommentInfoResDto diaryCommentInfoResDto = diaryCommentService.commentSave(diaryId, userId, diaryCommentSaveReqDto);
         return ResponseEntity
                 .status(SuccessCode.POST_SAVE_SUCCESS.getHttpStatusCode())
                 .body(diaryCommentInfoResDto);
     }
 
     // 익명 일기 댓글 수정
-    @PatchMapping("/{diary_id}/comment/{id}")
+    @PatchMapping("/comment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DiaryCommentInfoResDto> updateComment(
             @PathVariable("id") Long commentId,
@@ -46,7 +47,7 @@ public class DiaryCommentController {
     }
 
     // 익명 일기 댓글 삭제
-    @DeleteMapping("/{diary_id}/comment/{id}")
+    @DeleteMapping("/comment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> deleteComment(@PathVariable("id") Long commentId,
                                                 @RequestParam Long userId) {
