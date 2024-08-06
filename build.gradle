@@ -61,74 +61,74 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def frontendDir = "$projectDir/src/main/plantication"
-
-// 운영체제에 따라 npm 경로를 설정합니다.
-def npmCommand = "/opt/homebrew/bin/npm" // 절대 경로로 설정
-
-sourceSets {
-    main {
-        resources {
-            srcDirs = ["$projectDir/src/main/resources"]
-        }
-    }
-}
-
-processResources {
-    dependsOn "copyReactBuildFiles"
-}
-
-task installReact(type: Exec) {
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    commandLine npmCommand, 'install'
-
-    // 추가적인 로그를 출력하도록 설정
-    doFirst {
-        println "Running npm install in ${frontendDir}"
-    }
-
-    // 표준 출력과 오류 출력을 캡처하여 출력
-    standardOutput = new ByteArrayOutputStream()
-    errorOutput = new ByteArrayOutputStream()
-    ignoreExitValue = true
-    doLast {
-        def output = standardOutput.toString()
-        def error = errorOutput.toString()
-        if (!output.isEmpty()) println "Output:\n$output"
-        if (!error.isEmpty()) println "Error:\n$error"
-    }
-}
-
-task buildReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    commandLine npmCommand, 'run', 'build'
-
-    // 추가적인 로그를 출력하도록 설정
-    doFirst {
-        println "Running npm run build in ${frontendDir}"
-    }
-
-    // 표준 출력과 오류 출력을 캡처하여 출력
-    standardOutput = new ByteArrayOutputStream()
-    errorOutput = new ByteArrayOutputStream()
-    ignoreExitValue = true
-    doLast {
-        def output = standardOutput.toString()
-        def error = errorOutput.toString()
-        if (!output.isEmpty()) println "Output:\n$output"
-        if (!error.isEmpty()) println "Error:\n$error"
-    }
-}
-
-task copyReactBuildFiles(type: Copy) {
-    dependsOn "buildReact"
-    from "$frontendDir/build"
-    into "$projectDir/src/main/resources/static"
-}
-
-tasks.build.dependsOn copyReactBuildFiles
+//def frontendDir = "$projectDir/src/main/plantication"
+//
+//// 운영체제에 따라 npm 경로를 설정합니다.
+//def npmCommand = "/opt/homebrew/bin/npm" // 절대 경로로 설정
+//
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["$projectDir/src/main/resources"]
+//        }
+//    }
+//}
+//
+//processResources {
+//    dependsOn "copyReactBuildFiles"
+//}
+//
+//task installReact(type: Exec) {
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//    commandLine npmCommand, 'install'
+//
+//    // 추가적인 로그를 출력하도록 설정
+//    doFirst {
+//        println "Running npm install in ${frontendDir}"
+//    }
+//
+//    // 표준 출력과 오류 출력을 캡처하여 출력
+//    standardOutput = new ByteArrayOutputStream()
+//    errorOutput = new ByteArrayOutputStream()
+//    ignoreExitValue = true
+//    doLast {
+//        def output = standardOutput.toString()
+//        def error = errorOutput.toString()
+//        if (!output.isEmpty()) println "Output:\n$output"
+//        if (!error.isEmpty()) println "Error:\n$error"
+//    }
+//}
+//
+//task buildReact(type: Exec) {
+//    dependsOn "installReact"
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//    commandLine npmCommand, 'run', 'build'
+//
+//    // 추가적인 로그를 출력하도록 설정
+//    doFirst {
+//        println "Running npm run build in ${frontendDir}"
+//    }
+//
+//    // 표준 출력과 오류 출력을 캡처하여 출력
+//    standardOutput = new ByteArrayOutputStream()
+//    errorOutput = new ByteArrayOutputStream()
+//    ignoreExitValue = true
+//    doLast {
+//        def output = standardOutput.toString()
+//        def error = errorOutput.toString()
+//        if (!output.isEmpty()) println "Output:\n$output"
+//        if (!error.isEmpty()) println "Error:\n$error"
+//    }
+//}
+//
+//task copyReactBuildFiles(type: Copy) {
+//    dependsOn "buildReact"
+//    from "$frontendDir/build"
+//    into "$projectDir/src/main/resources/static"
+//}
+//
+//tasks.build.dependsOn copyReactBuildFiles
