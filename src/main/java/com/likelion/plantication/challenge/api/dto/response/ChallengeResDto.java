@@ -15,7 +15,6 @@ public record ChallengeResDto(
         Long challengeId,
         String title,
         String content,
-        String image,
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
         LocalDateTime createdAt,
@@ -35,7 +34,6 @@ public record ChallengeResDto(
                 .challengeId(challenge.getChallengeId())
                 .title(challenge.getTitle())
                 .content(challenge.getContent())
-                .image(challenge.getImage())
                 .createdAt(challenge.getCreatedAt())
                 .modifiedAt(challenge.getModifiedAt())
                 .start(challenge.getStart())

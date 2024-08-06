@@ -41,7 +41,7 @@ public class ChallengeController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<ChallengeResDto> createDiary(
+    public ResponseEntity<ChallengeResDto> createChallenge (
             @RequestPart("challengeCreateReqDto") ChallengeCreateReqDto challengeCreateReqDto,
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
             @RequestParam Long userId ) throws IOException {
@@ -67,7 +67,7 @@ public class ChallengeController {
         return ResponseEntity.ok(challengeListResDto);
     }
 
-    @GetMapping("/read/{challengeId}")
+    @GetMapping("/{challengeId}")
     @Operation(
             summary = "특정 챌린지 조회",
             description = "특정 챌린지를 조회합니다",
