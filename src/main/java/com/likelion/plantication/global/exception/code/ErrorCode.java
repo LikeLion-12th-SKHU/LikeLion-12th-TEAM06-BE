@@ -24,6 +24,7 @@ public enum ErrorCode {
     EXPIRED_TOKEN_EXCEPTION(HttpStatus.FORBIDDEN, "토큰이 만료되었습니다."),
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     AUTHENTICATION_FAILED_EXCEPTION(HttpStatus.FORBIDDEN, "인증에 실패했습니다."),
+    PARTICIPATION_ALREADY_EXISTS(HttpStatus.FORBIDDEN, "이미 가입되었습니다."),
 
 
     // 404

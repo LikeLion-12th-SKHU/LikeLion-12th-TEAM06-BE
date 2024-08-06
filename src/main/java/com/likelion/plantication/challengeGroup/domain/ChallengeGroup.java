@@ -22,9 +22,6 @@ public class ChallengeGroup {
     @JoinColumn(name = "CHALLENGE_ID", nullable = false, unique = true)
     private Challenge challenge;
 
-    @ManyToMany(mappedBy = "challengeGroups")
-    private List<User> users = new ArrayList<>();
-
     @OneToMany(mappedBy = "challengeGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participation> participations = new ArrayList<>();
 
@@ -34,10 +31,9 @@ public class ChallengeGroup {
     }
 
     @Builder
-    public ChallengeGroup(Long challengeGroupId, Challenge challenge, List<User> users, List<Participation> participations) {
+    public ChallengeGroup(Long challengeGroupId, Challenge challenge, List<Participation> participations) {
         this.challengeGroupId = challengeGroupId;
         this.challenge = challenge;
-        this.users = users;
         this.participations = participations;
     }
 }

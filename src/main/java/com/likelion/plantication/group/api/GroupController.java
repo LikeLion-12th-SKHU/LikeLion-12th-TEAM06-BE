@@ -1,11 +1,5 @@
 package com.likelion.plantication.group.api;
 
-import com.likelion.plantication.challenge.api.dto.request.ChallengeCreateReqDto;
-import com.likelion.plantication.challenge.api.dto.request.ChallengeUpdateResDto;
-import com.likelion.plantication.challenge.api.dto.response.ChallengeResDto;
-import com.likelion.plantication.challenge.application.ChallengeCreateService;
-import com.likelion.plantication.challenge.application.ChallengeReadService;
-import com.likelion.plantication.challenge.application.ChallengeUDService;
 import com.likelion.plantication.global.exception.code.SuccessCode;
 import com.likelion.plantication.group.api.dto.request.GroupCreateReqDto;
 import com.likelion.plantication.group.api.dto.request.GroupUpdateReqDto;

@@ -1,22 +1,18 @@
 package com.likelion.plantication.challenge.api;
 
 import com.likelion.plantication.challenge.api.dto.request.ChallengeCreateReqDto;
-import com.likelion.plantication.challenge.api.dto.request.ChallengeUpdateResDto;
+import com.likelion.plantication.challenge.api.dto.request.ChallengeUpdateReqDto;
 import com.likelion.plantication.challenge.api.dto.response.ChallengeListResDto;
 import com.likelion.plantication.challenge.api.dto.response.ChallengeResDto;
 import com.likelion.plantication.challenge.application.ChallengeCreateService;
 import com.likelion.plantication.challenge.application.ChallengeReadService;
 import com.likelion.plantication.challenge.application.ChallengeUDService;
-import com.likelion.plantication.diary.api.dto.response.DiaryListResDto;
 import com.likelion.plantication.global.exception.code.SuccessCode;
-import com.likelion.plantication.user.api.dto.request.UserSignUpReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +41,7 @@ public class ChallengeController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<ChallengeResDto> createDiary(
+    public ResponseEntity<ChallengeResDto> createChallenge (
             @RequestPart("challengeCreateReqDto") ChallengeCreateReqDto challengeCreateReqDto,
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
             @RequestParam Long userId ) throws IOException {
@@ -71,7 +67,7 @@ public class ChallengeController {
         return ResponseEntity.ok(challengeListResDto);
     }
 
-    @GetMapping("/read/{challengeId}")
+    @GetMapping("/{challengeId}")
     @Operation(
             summary = "특정 챌린지 조회",
             description = "특정 챌린지를 조회합니다",
@@ -88,7 +84,7 @@ public class ChallengeController {
         return ResponseEntity.status(SuccessCode.CHALLENGE_GET_SUCCESS.getHttpStatus()).body(resDto);
     }
 
-    @PatchMapping("/update/{challengeId}")
+    @PatchMapping(name = "/update/{challengeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "챌린지 수정",
             description = "챌린지를 수정합니다.",
@@ -99,13 +95,13 @@ public class ChallengeController {
                     @ApiResponse(responseCode = "500", description = "내부 서버 에러")
             }
     )
-    public ResponseEntity<ChallengeResDto> updateDiary(
+    public ResponseEntity<ChallengeResDto> updateChallenge(
             @RequestParam Long challengeId,
-            @RequestPart("challengeUpdateResDto") ChallengeUpdateResDto challengeUpdateResDto,
+            @RequestPart("challengeUpdateReqDto") ChallengeUpdateReqDto challengeUpdateReqDto,
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
             @RequestParam Long userId) throws IOException {
 
-        ChallengeResDto resDto = challengeUDService.updateChallenge(challengeId, challengeUpdateResDto, profileImage, userId).getBody();
+        ChallengeResDto resDto = challengeUDService.updateChallenge(challengeId, challengeUpdateReqDto, profileImage, userId).getBody();
         return ResponseEntity.status(SuccessCode.CHALLENGE_UPDATE_SUCCESS.getHttpStatus()).body(resDto);
     }
 

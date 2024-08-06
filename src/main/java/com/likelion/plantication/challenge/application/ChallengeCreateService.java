@@ -16,6 +16,7 @@ import com.likelion.plantication.user.domain.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,12 @@ public class ChallengeCreateService {
     public ResponseEntity<ChallengeResDto> createChallenge (
             ChallengeCreateReqDto challengeCreateReqDto, MultipartFile multipartFile, Long userId ) throws IOException {
 
-        String image = s3Service.upload(multipartFile, "challenge");
+        String image = null;
+
+        // 파일이 null이 아닌 경우에만 S3에 업로드
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            image = s3Service.upload(multipartFile, "challenge");
+        }
 
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION, ErrorCode.USER_NOT_FOUND_EXCEPTION.getMessage()));
@@ -48,6 +54,7 @@ public class ChallengeCreateService {
                 .image(image)
                 .start(challengeCreateReqDto.start())
                 .end(challengeCreateReqDto.end())
+                .user(user)
                 .build();
         challengeRepository.save(challenge);
 
