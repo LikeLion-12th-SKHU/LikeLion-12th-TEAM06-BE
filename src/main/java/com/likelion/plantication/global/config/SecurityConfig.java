@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/","/swagger-ui/**", "v3/api-docs/**", "/api/v1/**", "/api/**").permitAll()
+                        .requestMatchers("/", "/swagger-ui/**", "v3/api-docs/**", "/api/v1/**", "/api/**").permitAll()
                         .requestMatchers("/index.html").permitAll()
                         // .requestMatchers().hasRole("ADMIN") // 관리자만 해당 URL에 접근 가능
                         .anyRequest().authenticated()
@@ -58,14 +58,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // 특정 도메인만 허용하도록 설정
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("Access-Control-Allow-Credentials", "Authorization", "Set-Cookie"));
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://plantication.site"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-Requested-With", "Origin", "Accept"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Set-Cookie"));
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
