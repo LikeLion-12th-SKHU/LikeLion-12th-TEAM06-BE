@@ -3,6 +3,7 @@ package com.likelion.plantication.diaryComment.domain;
 import com.likelion.plantication.diary.api.dto.request.DiaryUpdateReqDto;
 import com.likelion.plantication.diary.domain.Diary;
 import com.likelion.plantication.diaryComment.api.dto.request.DiaryCommentUpdateReqDto;
+import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

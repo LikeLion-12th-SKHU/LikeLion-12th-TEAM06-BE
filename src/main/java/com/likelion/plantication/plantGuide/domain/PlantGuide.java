@@ -1,11 +1,14 @@
 package com.likelion.plantication.plantGuide.domain;
 
+import com.likelion.plantication.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
+
+import java.util.Date;
 
 @Entity
 @Getter
@@ -24,12 +27,12 @@ public class PlantGuide {
     private String sentence;
     private String content;
     private String image;
-    private DateTime createdAt;
+    private Date createdAt;
     private int view;
 
     @Builder
     public PlantGuide(User user, String title, String sentence, String content,
-                      String image, DateTime createdAt, int view) {
+                      String image, Date createdAt, int view) {
         this.user = user;
         this.title = title;
         this.sentence = sentence;

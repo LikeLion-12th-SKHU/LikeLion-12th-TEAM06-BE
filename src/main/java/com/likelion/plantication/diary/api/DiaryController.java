@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/api/v1/diary")
 public class DiaryController {
     private final DiaryService diaryService;
 
@@ -45,12 +44,11 @@ public class DiaryController {
 
     // 익명 일기 작성
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DiaryInfoResDto> diarySave(
-            @RequestPart("diary")DiarySaveReqDto diarySaveReqDto,
-            @RequestPart("image")MultipartFile image,
-            Principal principal) throws IOException {
-        DiaryInfoResDto diaryInfoResDto = diaryService.diarySave(diarySaveReqDto, image, principal);
+            @RequestPart("diary") DiarySaveReqDto diarySaveReqDto,
+            @RequestPart("image") MultipartFile image,
+            @RequestParam Long userId) throws IOException {
+        DiaryInfoResDto diaryInfoResDto = diaryService.diarySave(diarySaveReqDto, image, userId);
         return ResponseEntity
                 .status(SuccessCode.POST_SAVE_SUCCESS.getHttpStatusCode())
                 .body(diaryInfoResDto);
@@ -63,8 +61,8 @@ public class DiaryController {
             @PathVariable("diaryId") Long diaryId,
             @RequestPart("diary")DiaryUpdateReqDto diaryUpdateReqDto,
             @RequestPart("image") MultipartFile image,
-            Principal principal) throws IOException {
-        DiaryInfoResDto diaryInfoResDto = diaryService.updateDiary(diaryId, diaryUpdateReqDto, image, principal);
+            @RequestParam Long userId) throws IOException {
+        DiaryInfoResDto diaryInfoResDto = diaryService.updateDiary(diaryId, diaryUpdateReqDto, image, userId);
         return ResponseEntity
                 .status(SuccessCode.PATCH_UPDATE_SUCCESS.getHttpStatusCode())
                 .body(diaryInfoResDto);
@@ -75,8 +73,8 @@ public class DiaryController {
     @DeleteMapping("/{diaryId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> deleteDiary(@PathVariable("diaryId") Long diaryId,
-                                              Principal principal) {
-        diaryService.deleteDiary(diaryId, principal);
+                                              @RequestParam Long userId) {
+        diaryService.deleteDiary(diaryId, userId);
         return ResponseEntity
                 .status(SuccessCode.DELETE_SUCCESS.getHttpStatusCode())
                 .body("삭제되었습니다.");

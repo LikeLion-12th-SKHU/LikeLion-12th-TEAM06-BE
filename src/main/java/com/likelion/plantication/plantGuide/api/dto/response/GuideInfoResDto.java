@@ -6,6 +6,8 @@ import com.likelion.plantication.plantGuide.domain.PlantGuide;
 import lombok.Builder;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Builder
 public record GuideInfoResDto(
         Long id,
@@ -13,13 +15,13 @@ public record GuideInfoResDto(
         String title,
         String sentence,
         String image,
-        DateTime createdAt,
+        Date createdAt,
         int view
 ) {
     public static GuideInfoResDto from(PlantGuide plantGuide) {
         return GuideInfoResDto.builder()
                 .id(plantGuide.getId())
-                .userId(plantGuide.getUser().getId())
+                .userId(plantGuide.getUser().getUserId())
                 .title(plantGuide.getTitle())
                 .sentence(plantGuide.getSentence())
                 .image(plantGuide.getImage())

@@ -4,8 +4,7 @@ import java.util.Date;
 
 public record DiaryUpdateReqDto(
         String title,
-        String content,
-        String image
+        String content
 ) {
 
 }
