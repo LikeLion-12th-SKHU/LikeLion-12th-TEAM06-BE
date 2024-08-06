@@ -61,52 +61,52 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def frontendDir = "$projectDir/src/main/plantication"
-
-// 운영체제에 따라 npm 경로를 설정합니다.
-def npmCommand = System.getProperty("os.name").toLowerCase().contains("mac") ? "/opt/homebrew/bin/npm" : "npm"
-
-sourceSets {
-    main {
-        resources {
-            srcDirs = ["$projectDir/src/main/resources"]
-        }
-    }
-}
-
-processResources {
-    dependsOn "copyReactBuildFiles"
-}
-
-task installReact(type: Exec) {
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-
-    commandLine npmCommand, 'install'
-}
-
-// 'npm audit fix'를 생략한 task
-task auditReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-
-    // commandLine npmCommand, 'audit', 'fix' // 이 줄을 주석 처리 또는 제거
-}
-
-task buildReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-
-    commandLine npmCommand, 'run', 'build'
-}
-
-task copyReactBuildFiles(type: Copy) {
-    dependsOn "buildReact"
-    from "$frontendDir/build"
-    into "$projectDir/src/main/resources/static"
-}
+//def frontendDir = "$projectDir/src/main/plantication"
+//
+//// 운영체제에 따라 npm 경로를 설정합니다.
+//def npmCommand = System.getProperty("os.name").toLowerCase().contains("mac") ? "/opt/homebrew/bin/npm" : "npm"
+//
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["$projectDir/src/main/resources"]
+//        }
+//    }
+//}
+//
+//processResources {
+//    dependsOn "copyReactBuildFiles"
+//}
+//
+//task installReact(type: Exec) {
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//
+//    commandLine npmCommand, 'install'
+//}
+//
+//// 'npm audit fix'를 생략한 task
+//task auditReact(type: Exec) {
+//    dependsOn "installReact"
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//
+//    // commandLine npmCommand, 'audit', 'fix' // 이 줄을 주석 처리 또는 제거
+//}
+//
+//task buildReact(type: Exec) {
+//    dependsOn "installReact"
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//
+//    commandLine npmCommand, 'run', 'build'
+//}
+//
+//task copyReactBuildFiles(type: Copy) {
+//    dependsOn "buildReact"
+//    from "$frontendDir/build"
+//    into "$projectDir/src/main/resources/static"
+//}
